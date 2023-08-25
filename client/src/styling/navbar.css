@@ -1,0 +1,199 @@
+
+  .navbar {
+    position: relative;
+    background-color: transparent;
+    z-index: 100;
+    font-family: 'Games', sans-serif;
+  }
+
+  .menu-btn {
+    position: absolute;
+    z-index: 2;
+    right: 20px;
+    top: 20px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 50%;
+    border: 1px #c90000a2; 
+    cursor: pointer;
+    background: #c90000a2;
+    transition: all 0.2s ease-in-out;
+  }
+
+  #active:checked ~ .menu-btn {
+    background-color: #00a30eb0;
+  }
+
+  #active:checked ~ .menu-btn i:before {
+    content: "\f00d";
+  }
+
+  .navbar-list {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+    text-align: center;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;  
+  }
+
+  .navbar-item {
+    margin: 15px 0;
+    font-family: 'Games', sans-serif; 
+  }
+
+  .navbar-link {
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 500;
+    padding: 5px 30px;
+    color: #fff;
+    border-radius: 50px;
+    background: #000;
+    position: relative;
+    line-height: 50px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-signout {
+    text-align: center;
+  }
+
+  .menu-open .navbar-list {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url(https://wallpapercave.com/wp/wp5348053.jpg); 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    clip-path: circle(25px at calc(100% - 45px) 45px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  #active:checked ~ .wrapper {
+    clip-path: circle(75%);
+  }
+
+  .wrapper ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+    text-align: center;
+  }
+
+  .wrapper ul li {
+    margin: 20px 0;
+    padding: 5px;
+  }
+
+  .wrapper ul li a {
+    color: none;
+    text-decoration: none;
+    font-size: 38px;
+    font-weight: 500;
+    padding: 10px 30px;
+    color: #ffffff;
+    border-radius: 50px;
+    border-color: #ffffff;
+    border: 2px solid ;
+    background: #000000;
+    position: relative;
+    line-height: 50px;
+    transition: all 0.3s ease;
+  }
+
+  .wrapper ul li a:after {
+    position: absolute;
+    content: "";
+    background: linear-gradient(
+      to top,
+      #FF4500, /* Orange-Red */
+      #FF0000, /* Red */
+      #FF4500  /* Orange-Red */
+    );
+    width: 120%;
+    height: 110%;
+    left: -10%;
+    top: -3.5%;    
+    border-radius: 50px;
+    transform: scaleY(0);
+    z-index: -1;
+    animation: rotate 1.5s linear infinite;
+    transition: transform 0.25s ease;
+  }
+
+  .wrapper ul li a:hover:after {
+    transform: scaleY(1.1);
+  }
+
+  .wrapper ul li a:hover {
+    color: #fff;
+  }
+
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    text-align: center;
+    width: 100%;
+    color: #000000;
+  }
+
+  .content .title {
+    font-size: 40px;
+    font-weight: 700;
+  }
+
+  .content p {
+    font-size: 35px;
+    font-weight: 600;
+  }
+
+  @keyframes rotate {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+
+  .fa-bars {
+    border: 2px solid #000000; 
+    border-radius: 10%;
+  }
+
+  .signout-button {
+    text-align: center;
+    font-family: 'Games', sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+    padding: 5px 30px;
+    color: #fff;
+    border-radius: 50px;
+    margin-top: 150px;
+    background: #000;
+    line-height: 50px;
+    transition: all 0.3s ease;
+  }
+
+  .signout-button:hover {
+    color: #000;
+    background: #fff;
+  }
