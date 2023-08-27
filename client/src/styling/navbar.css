@@ -16,14 +16,14 @@
     text-align: center;
     line-height: 50px;
     border-radius: 50%;
-    border: 1px #c90000a2; 
+    border: 1px #000000a2; 
     cursor: pointer;
-    background: #c90000a2;
+    background: #c90000;
     transition: all 0.2s ease-in-out;
   }
 
   #active:checked ~ .menu-btn {
-    background-color: #00a30eb0;
+    background-color: #00a30e;
   }
 
   #active:checked ~ .menu-btn i:before {
@@ -108,7 +108,7 @@
     padding: 10px 30px;
     color: #ffffff;
     border-radius: 50px;
-    border-color: #ffffff;
+    border-color: #ff0000;
     border: 2px solid ;
     background: #000000;
     position: relative;
@@ -152,7 +152,7 @@
     z-index: -1;
     text-align: center;
     width: 100%;
-    color: #000000;
+    color: #00000000;
   }
 
   .content .title {
@@ -175,7 +175,7 @@
   }
 
   .fa-bars {
-    border: 2px solid #000000; 
+    border: 3px solid #000000; 
     border-radius: 10%;
   }
 

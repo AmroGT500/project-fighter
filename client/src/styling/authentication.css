@@ -1,11 +1,18 @@
 .auth-title {
-  text-align: center;
-  font-family: 'Games', sans-serif; 
+  color: rgb(255, 255, 255);
   font-size: 60px;
   font-weight: 500;
-  background-color: transparent;
-  text-shadow: -20px 20px 2px rgba(150, 0, 0, 0.250),
-  0px 0px 4px rgba(255, 0, 0, 0.660);
+  text-align: center;
+  padding: 10px;
+  font-family: 'Games', sans-serif; 
+  text-shadow: -3px 3px 2px rgba(255, 204, 0, 0.8),
+  -4px 4px 5px rgb(0, 0, 0);
+}
+
+.toggle-title {
+  font-size: 25px;
+  text-shadow: 1px 1px 1px rgba(255, 204, 0, 0.85); 
+  /* text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);  */
 }
 
 .title-container {
@@ -18,8 +25,8 @@
   flex-direction: column;
   align-items: center;
   font-family: 'Darbots', sans-serif;
-  background-color: #ff00001c;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.855);
+  background-color: #ffffff00;
+  box-shadow: 0px 1px 20px rgba(0, 0, 0), 0px 1px 5px rgba(255, 204, 0, 0.85);
   width: 500px;
   height: 400px;
   align-self: center;
@@ -27,16 +34,20 @@
   margin-top: -500px;
   background: linear-gradient(to top, #ff3c00);
   background-size: 100% 100%;
-  animation: rotate 10s linear infinite;
   justify-content: center;
 }
 
   .container {
     height: 100vh;
-    background-color: #ffffff;
+    width: 100vw;
+    padding-left: 10px;
+    background-image: url(https://i.imgur.com/qKNjAJ1.jpg);
     display: grid;
     justify-content: center;
     align-items: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .authentication-tabs {
     display: flex;
@@ -65,62 +76,72 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    
   }
   
   .login-button:hover {
-    background-color: #007c17c6; 
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); 
+    background-color: rgba(255, 205, 0, 0.8); 
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8); 
   }
 
   .input-container {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+    
   }
 
   .input-label {
     font-weight: bold;
-    font-size: medium;
+    font-size: 20px;
     margin-bottom: 5px;
+    color: rgba(255, 204, 0, 0.94);
+    text-shadow: 1px 1px 4px rgb(0, 0, 0);
+
   }
 
   .input-field {
     padding: 8px;
-    border: 1px solid #009732;
+    border: 1px solid rgba(255, 205, 0, 0.8);
     border-radius: 3px;
     font-family: 'Darbots', sans-serif;
+    font-size: 16px;
+
   }
 
   .input-field:focus {
-    border-color: #007c17c6;
-    box-shadow: 0 0 5px rgba(0, 124, 23, 0.5);
+    border-color: rgba(255, 205, 0, 0.8);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
   }
 
 
 .login-button, .signup-button {
   background-color: #000000c5;
+  text-shadow: 0px 1px 2px rgb(0, 0, 0);
   font-family: 'Darbots', sans-serif;
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 10px 20px;
+  margin-top: 5px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease; 
 }
 
 .login-button:hover, .signup-button:hover {
-  background-color: #007c17c6;
-  transform: scale(1.5); 
+  background-color: rgba(255, 204, 0, 0.9);
+  transform: scale(1.2); 
 }
 
 .mode-toggle {
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
-  transition: color 0.2s ease, transform 0.2s ease;;
+  text-shadow: 0px 1px 2px rgba(255, 204, 0, 0.85); 
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .mode-toggle:hover {
-  color: #007c17c6; 
-  transform: scale(2.5);
+  color: rgba(255, 204, 0, 0.99); 
+  text-shadow: 0px 1px 2px rgb(0, 0, 0);
+  transform: scale(1.5);
 }
 
 .login-mode {
@@ -135,4 +156,7 @@
 
 .error-message {
   text-align: center;
+  font-size: 18px;
+  color: rgba(255, 205, 0, 0.99);
+  text-shadow: 0px 1px 2px rgb(0, 0, 0);
 }

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-// import { Link, Navigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 import '../styling/authentication.css';
 import { useNavigate } from 'react-router-dom';
-import { fetchApi } from '../utils';
+import { UserContext } from '../context/user';
+
 
 const Authentication = () => {
+  const {user, setUser} = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isSignupMode, setIsSignupMode] = useState(false); // State to track signup mode
+  const [isSignupMode, setIsSignupMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [signupSuccess, setSignupSuccess] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Authentication = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetchApi('auth/login', {
+      const response = await fetch('/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,7 +33,8 @@ const Authentication = () => {
       if (response.status === 200) {
         const data = await response.json();
         setLoggedIn(true);
-        navigate(`/profile/${data.user_id}`);
+        setUser(data)
+        navigate(`/profile`);
       } else {
         setErrorMessage('Invalid username or password.');
       }
@@ -40,7 +42,7 @@ const Authentication = () => {
       console.error('Login error:', error);
     }
   };
-  
+
   const handleSignup = async () => {
     if (username.length < 5 || password.length < 5) {
       setErrorMessage('Username and password must be at least 5 characters.');
@@ -48,12 +50,12 @@ const Authentication = () => {
     }
   
     try {
-      const response = await fetchApi('auth/signup', {
+      const response = await fetch('/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password_hash: password }), 
+        body: JSON.stringify({ username, password: password }), 
       });
   
       if (response.status === 201) {
@@ -66,7 +68,7 @@ const Authentication = () => {
       console.error('Signup error:', error);
     }
   };
-  
+
 
   return (
     <div className="container">
@@ -74,7 +76,7 @@ const Authentication = () => {
         <h1 className="auth-title">PROJECT FIGHTER</h1>
       </div>
       <div className={`authentication-container ${isSignupMode ? 'signup-mode' : 'login-mode'}`}>
-        <h2>{isSignupMode ? 'Register' : 'Login'}</h2>
+        <h2 className='toggle-title'>{isSignupMode ? 'Register' : 'Login'}</h2>
         <div className="input-container">
           <label className="input-label">Username</label>
           <input

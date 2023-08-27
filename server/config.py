@@ -3,9 +3,9 @@ from sqlalchemy import MetaData
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Api
-# from flask_bcrypt import bcrypt
+from flask_bcrypt import Bcrypt
 from flask_cors import CORS
-import os
+import os   
 
 app = Flask( __name__ )
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -26,4 +26,11 @@ CORS( app )
 Migrate( app, db )
 db.init_app( app )
 api = Api( app )
-# bcrypt = Bcrypt( app )
+bcrypt = Bcrypt( app )
+
+def get_secret_key_from_file(file_path):
+    with open(file_path, 'rb') as f:
+        secret_key = f.read().strip() 
+    return secret_key
+
+app.secret_key = get_secret_key_from_file('encryption.env')

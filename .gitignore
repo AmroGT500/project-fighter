@@ -28,3 +28,4 @@ yarn-error.log*
 *.enc
 *.hash
 
+server/encryption.env

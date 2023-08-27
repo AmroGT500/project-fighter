@@ -1,5 +1,4 @@
-from flask import request, jsonify
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import request, jsonify, make_response, session
 from flask_restful import Resource
 from models import User, Match, Fighter
 from config import app, api, db
@@ -16,8 +15,9 @@ class AuthLoginResource(Resource):
         password = data.get('password')
         
         user = User.query.filter_by(username=username).first()
-        if user and check_password_hash(user.password_hash, password):
-            return {'user_id': user.id}, 200
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
+            return make_response(user.to_dict(), 200)
         else:
             return {'message': 'Invalid username or password'}, 401
 
@@ -25,12 +25,12 @@ class AuthSignupResource(Resource):
     def post(self):
         data = request.get_json()
         username = data.get('username')
-        password = data.get('password_hash')  # Use the provided password_hash
+        password = data.get('password')  
 
         if User.query.filter_by(username=username).first():
             return {'message': 'Username already exists. Please choose a different username'}, 409
         
-        new_user = User(username=username, password_hash=generate_password_hash(password))
+        new_user = User(username=username, password=password)
         db.session.add(new_user)
         db.session.commit()
         return {'message': 'User created successfully'}, 201
@@ -39,20 +39,22 @@ class UserResource(Resource):
     def get(self, user_id=None):
         if user_id is None:
             users = User.query.all()
-            users_data = [{'id': user.id, 'username': user.username} for user in users]
-            return jsonify(users_data)
+            users_data = [user.to_dict() for user in users]
+            return make_response(users_data, 200)
         else:
-            user = User.query.get_or_404(user_id)
-            user_data = {'id': user.id, 'username': user.username}
-            return jsonify(user_data)
+            user = User.query.get(user_id)
+            if user :
+                return make_response(user.to_dict(), 200)
+            else:
+                return make_response({'error' : 'User Not Found'} , 404) 
 
     def patch(self, user_id):
         user = User.query.get_or_404(user_id)
         data = request.get_json()
         if 'username' in data:
             user.username = data['username']
-        if 'password_hash' in data:
-            user.password_hash = data['password_hash']
+        if 'password' in data:
+            user.password = data['password']
         db.session.commit()
         return {'message': 'User updated successfully'}
 
@@ -61,7 +63,6 @@ class UserResource(Resource):
         db.session.delete(user)
         db.session.commit()
         return {'message': 'User deleted successfully'}
-
 
 class FighterResource(Resource):
     def get(self, fighter_id=None):
@@ -75,21 +76,20 @@ class FighterResource(Resource):
             return jsonify(fighter_data)
 
 class MatchResource(Resource):
-    def get(self, match_id=None):
-        if match_id is None:
+    def get(self, user_id=None):
+        if user_id is None:
             matches = Match.query.all()
-            matches_data = [match.to_dict(only=('id', 'win_loss', 'fighter1_id', 'fighter2_id')) for match in matches]
-            return jsonify(matches_data)
         else:
-            match = Match.query.get_or_404(match_id, description = "match not found, sorry eh, im Canadian")
-            match_data = match.to_dict(only=('id', 'win_loss', 'fighter1_id', 'fighter2_id'))
-            return jsonify(match_data)
+            matches = Match.query.filter_by(user_id=user_id).all() 
+        matches_data = [match.to_dict(only=('id', 'win_loss', 'fighter1_id', 'fighter2_id')) for match in matches]
+        return jsonify(matches_data)
+
 
 api.add_resource(AuthLoginResource, '/auth/login')
 api.add_resource(AuthSignupResource, '/auth/signup')
 api.add_resource(UserResource, '/users', '/users/<int:user_id>')
 api.add_resource(FighterResource, '/fighters', '/fighters/<int:fighter_id>')
-api.add_resource(MatchResource, '/matches', '/matches/<int:match_id>')
+api.add_resource(MatchResource, '/matches', '/matches/<int:user_id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

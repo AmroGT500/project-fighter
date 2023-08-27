@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/auth" />} />
+        <Route path="/" element={<Navigate to="/authentication" />} />
         <Route path="/authentication" element={<Authentication isSignupMode={false} />} /> {/* Login route */}
         <Route path="/*" element={<AuthenticatedRoutes />} />
       </Routes>
@@ -30,11 +30,10 @@ function AuthenticatedRoutes() {
       <div className="app-background"></div>
       {!isBattlePage && <Navbar />}
       <Routes>
-        <Route path="/profile/:userId" element={<Profile />} />
-        <Route path="/fight-setup/:userId" element={<FightSetup />} />
-        <Route path="/match-history/:userId" element={<MatchHistory />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/fight-setup" element={<FightSetup />} />
+        <Route path="/match-history" element={<MatchHistory />} />
         {!isBattlePage && <Route path="/battle" element={<Battle />} />}
-        {/* Add more routes here */}
       </Routes>
     </>
   );

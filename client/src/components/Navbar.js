@@ -28,17 +28,17 @@ const Navbar = () => {
       <div className="wrapper">
         <ul>
           <li>
-            <Link to="/profile/:userId" onClick={handleLinkClick}>
+            <Link to={`/profile`} onClick={handleLinkClick}>
               Profile
             </Link>
           </li>
           <li>
-            <Link to="/fight-setup/:userId" onClick={handleLinkClick}>
+            <Link to={`/fight-setup`} onClick={handleLinkClick}>
               Fight Now!
             </Link>
           </li>
           <li>
-            <Link to="/match-history/:userId" onClick={handleLinkClick}>
+            <Link to={`/match-history`} onClick={handleLinkClick}>
               Match History
             </Link>
           </li>

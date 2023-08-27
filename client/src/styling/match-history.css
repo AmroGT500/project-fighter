@@ -1,38 +1,46 @@
 .match-history-wrapper {
-    display: grid;
-    justify-content: center;
-  }
+  display: grid;
+  justify-content: center;
+}
 
 .match-history-container {
-    display: grid;
-    width: 90vw;
-    font-family: 'Darbots', sans-serif;
-    grid-template-rows: auto 1fr auto; 
-  }
+  display: grid;
+  width: 90vw;
+  font-family: 'Darbots', sans-serif;
+  grid-template-rows: auto 1fr auto;
+}
 
-  .match-history-title {
-    color: rgb(255, 255, 255);
-    font-size: 60px;
-    font-weight: 500;
-    text-align: center;
-    padding: 10px;
-    font-family: 'Games', sans-serif; 
-    text-shadow: -20px 20px 6px rgba(0, 70, 150, 0.75),
-    0px 4px 4px rgba(0, 0, 0, 0.75);
-  }
+.match-history-title {
+  color: rgb(255, 255, 255);
+  font-size: 60px;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px;
+  font-family: 'Games', sans-serif; 
+  text-shadow: -3px 3px 2px rgba(255, 204, 0, 0.8),
+  -4px 4px 5px rgb(0, 0, 0);
+}
 
-  .match-history-list {
-    height: 150px;
-    color:#ffffff;
-    font-weight: bold;
-    font-size: 20px;
-    text-align: left;
-    padding: 10px;
-    list-style: none;
-    border-radius: 5px;
-    text-shadow: 0px 1px 1px rgb(0, 0, 0);
-  }
+.match-history-list {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+  padding: 10px;
+  list-style: none;
+  border-radius: 5px;
+  text-shadow: 0px 1px 1px rgb(0, 0, 0);
+}
 
-  .match-history-list-item {
-    padding: 10px;
-  }
+
+.no-matches-message {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 36px;
+  text-align: center;
+  padding: 10px;
+  list-style: none;
+  border-radius: 5px;
+  text-shadow: -2px 3px 3px rgb(0, 150, 20),
+      -2px 3px 2px rgb(0, 0, 0);
+}

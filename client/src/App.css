@@ -48,10 +48,10 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background-image: url(https://wallpapercave.com/wp/wp5348087.jpg);
+  background-image: url(https://i.imgur.com/NyejHiV.jpg);
   background-size: cover;
+  opacity: 0.99;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.9;
   z-index: -1;
 }
