@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import '../styling/profile.css';
 import { UserContext } from '../context/user';
 
@@ -8,8 +8,29 @@ function Profile() {
   const [showChangeUsername, setShowChangeUsername] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [usernameChanged, setUsernameChanged] = useState(false); 
+  const [passwordChanged, setPasswordChanged] = useState(false);
+  const [typedUsername, setTypedUsername] = useState('');
 
+  const username = user.username;
 
+  useEffect(() => {
+    let currentIndex = 0;
+  
+    const typingInterval = setInterval(() => {
+      if (currentIndex === username.length) {
+        clearInterval(typingInterval);
+        return;
+      }
+      const currentChar = username[currentIndex];
+      setTypedUsername(prevTyped => prevTyped + currentChar);
+  
+      currentIndex++;
+    }, 300);
+  
+    return () => clearInterval(typingInterval);
+  }, [username]);
+  
   const handleUsernameChange = event => {
     setNewUsername(event.target.value);
   };
@@ -29,6 +50,12 @@ function Profile() {
       if (response.ok) {
         setUser(prevUser => ({ ...prevUser, username: newUsername }));
         setNewUsername('');
+        setUsernameChanged(true);
+        console.log('Username changed ')
+
+        setTimeout(() => {
+          setUsernameChanged(false);
+        }, 3000); 
       } else {
         console.error('Failed to update username');
       }
@@ -55,9 +82,14 @@ function Profile() {
 
       if (response.ok) {
         setNewPassword('');
+        setPasswordChanged(true);
         console.log('Password changed ')
+
+        setTimeout(() => {
+          setPasswordChanged(false);
+        }, 3000); 
       } else {
-        console.error('Failed to update Password');
+        console.error('Failed to update password');
       }
     } catch (error) {
       console.error('Error updating Password:', error);
@@ -71,56 +103,75 @@ function Profile() {
     return user.matches.filter(match => !match.win_loss).length
   }
   function winrate() {
-    return wins() / user.matches.length * 100
+    const totalMatches = user.matches.length;
+    
+    if (totalMatches === 0) {
+      return "No matches recorded";
+    }
+  
+    const totalWins = wins();
+    return (totalWins / totalMatches * 100).toFixed(2) + "%";
   }
 
   return (
     <div className='profile-wrapper'>
       <div className="profile-container">
-        <h1 className="profile-title">Welcome to the Fight Club, {user.username}</h1>
+        <h1 className="profile-title">
+          <span className="neon-effect">Welcome to PROJECT FIGHTER</span><br />
+          <span className="username-effect">{typedUsername}</span>
+        </h1>
         <div className="profile-info">
           <p>Wins: {wins()}</p>
           <p>Losses: {losses()}</p>
-          <p>Winrate: {winrate()}%</p>
+          <p>Winrate: {winrate()}</p>
         </div>
 
-        <div className="toggle-username">
-          <button className="toggle-button" onClick={() => setShowChangeUsername(!showChangeUsername)}>Change Username</button>
-          {showChangeUsername && (
-            <div className="profile-section">
-              <h3>Change Username</h3>
-              <input
-                type="text"
-                placeholder="New Username"
-                value={newUsername}
-                onChange={handleUsernameChange}
-                className="custom-input"
-              />
-              <button className="update-button" onClick={handleUpdateUsername}>Update Username</button>
-            </div>
-          )}
-        </div>
+        <div className="toggle-container">
+          <div className="toggle-username">
+            <button className="toggle-button" onClick={() => setShowChangeUsername(!showChangeUsername)}>Change Username</button>
+            {showChangeUsername && (
+              <div className="profile-section">
+                <h3>Change Username</h3>
+                <input
+                  type="text"
+                  placeholder="New Username"
+                  value={newUsername}
+                  onChange={handleUsernameChange}
+                  className="custom-input"
+                />
+                <button className="update-button" onClick={handleUpdateUsername}>Update Username</button>
+              </div>
+            )}
+            {usernameChanged && (
+              <div className="popup-message">Username changed successfully!</div>
+            )}
+          </div>
 
-        <div className="toggle-password">
-          <button className="toggle-button" onClick={() => setShowChangePassword(!showChangePassword)}>Change Password</button>
-          {showChangePassword && (
-            <div className="profile-section">
-              <h3>Change Password</h3>
-              <input
-                type="text"
-                placeholder="New Password"
-                value={newPassword}
-                onChange={handlePasswordChange}
-                className="custom-input"
-              />
-              <button className="update-button" onClick={handleUpdatePassword}>Update Password</button>
-            </div>
-          )}
-        </div>
+          <div className="toggle-password">
+            <button className="toggle-button" onClick={() => setShowChangePassword(!showChangePassword)}>Change Password</button>
+            {showChangePassword && (
+              <div className="profile-section">
+                <h3>Change Password</h3>
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={newPassword}
+                  onChange={handlePasswordChange}
+                  className="custom-input"
+                />
+                <button className="update-button" onClick={handleUpdatePassword}>Update Password</button>
+              </div>
+            )}
+            {passwordChanged && (
+              <div className="popup-message">Password changed successfully!</div>
+            )}
+          </div>
 
+        </div>
       </div>
     </div>
   );
+  
 }
 
 export default Profile;
