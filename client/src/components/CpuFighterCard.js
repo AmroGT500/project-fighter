@@ -4,7 +4,7 @@ import '../styling/fightercard.css';
 function CpuFighterCard({ fighter }) {
   return (
     <div className="fighter-card">
-      <h2>CPU</h2>
+      <h2 className='card-title'>CPU</h2>
       {fighter && (
         <>
           <img src={fighter.image} alt={fighter.name} />

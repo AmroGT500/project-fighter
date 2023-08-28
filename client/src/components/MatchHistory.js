@@ -37,9 +37,7 @@ const MatchHistory = ({ user_id }) => {
             {matches.map((match, i) => (
               <div key={match.id} className="match-history-list">
                 <div className="match-info">
-                  <div className="match-header">
-                    <h4 className='list-header'>Match #{i + 1}</h4>
-                  </div>
+
                   <div className="match-data">
                     <div className="win-loss" style={{ color: match.win_loss ? 'green' : 'red' }}>
                       {match.win_loss ? 'Victory' : 'Defeat'}

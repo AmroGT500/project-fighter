@@ -1,17 +1,20 @@
 .fighter-card {
     font-family: 'Darbots', sans-serif;
-    font-size: 24px;
+    font-size: 18px;
     color: rgb(255, 255, 255);
-    background-color: rgba(34, 17, 51, 0.65);
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    align-items: center; 
     width: 300px;
-    height: 350px;
+    padding: 5px;
 }
 
 .fighter-card img{
     width: 160px;
     height: 160px;
     opacity: 0.8;
-    border-radius: 100px;
+    border-radius: 50px;
 }
 
 .card-title{

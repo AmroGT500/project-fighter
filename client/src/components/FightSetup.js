@@ -11,7 +11,7 @@ function FightSetup() {
   const [selectedUserFighter, setSelectedUserFighter] = useState(null);
   const [selectedCpuFighter, setSelectedCpuFighter] = useState(null);
   const [confirmUserSelection, setConfirmUserSelection] = useState(false);
-  const [startBattle, setStartBattle] = useState(false); // State to control battle start
+  const [startBattle, setStartBattle] = useState(false);
   const navigate = useNavigate();
 
   const handleUserFighterSelect = (fighter) => {
@@ -50,7 +50,10 @@ function FightSetup() {
 
   return (
     <div className={`fight-setup-container${startBattle ? ' start-battle' : ''}`}>
-      <div className="fighters-container">
+      <div className='fighters-container'>
+        <div className='top-row'>
+          <h1>Choose Your Fighter</h1>
+        </div> 
         <div className="fighter-list">
           {fighters.map(fighter => (
             <div
@@ -78,7 +81,7 @@ function FightSetup() {
 
         {confirmUserSelection && (
           <button className="toggle-button" onClick={handleConfirmSelection}>
-            Confirm Selection
+            Confirm?
           </button>
         )}
       </div>
