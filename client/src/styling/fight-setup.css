@@ -1,6 +1,7 @@
 .fight-setup-container {
     position: relative;
     display: grid;
+    width: 100vw;
     justify-items: center;
     background-color: #f2f2f200;
     font-family: 'Games', sans-serif;
@@ -30,11 +31,13 @@
 
 .fighters-container {
     display: grid;
-    grid-template-columns: repeat(3, 300px);
+    grid-template-columns: repeat(3, 500px);
     gap: 1px;
     height: 95vh;
+    width: 100vw;
     align-items: center;
     justify-items: center;
+    justify-content: center;
 }
 
 .fighter-list {
@@ -43,9 +46,10 @@
     grid-template-rows: repeat(3, 1fr);
     border-collapse: collapse;
     align-items: center;
+    justify-items: center;
     font-family: 'Darbots', sans-serif;
-    height: 300px;
-    width: 650px;
+    height: 600px;
+    width: 1200px;
     border: 0px solid transparent;
     grid-column: span 3;
     text-align: center;
@@ -135,9 +139,121 @@
         background-position: 0 100%;
     }
 }
-
-.fighter-card{
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    border-radius: 20px;
+.fighter-box {
+    display: flex;
+    width: 190px;
+    height: 190px;
+    border-radius: 5px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
+.image-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-container img {
+    display: block;
+    border-radius: 10px;
+    border: transparent 1px rgba(0, 0, 0, 0);
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+}
+
+.fighter-box:hover .image-container img {
+    transform: scale(1.2);
+    border-radius: 5px;
+    transition: 2000ms;
+}
+.fight-setup-container.start-battle {
+    position: relative;
+    
+}
+
+.countdown-sequence {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.countdown-number {
+    font-size: 80px;
+    font-weight: 500px;
+    color: white;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+    margin: 10px;
+    animation: fadeIn 3s infinite;
+    z-index: 999;
+}
+
+.countdown-text {
+    font-size: 80px;
+    font-weight: 500px;
+    color: white;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+    margin-top: 10px;
+    animation: fadeIn 3s infinite;
+    z-index: 999;
+}
+    
+@keyframes fadeToBlack {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 1);
+    }
+}
+
+.fade-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    animation: fadeToBlack 3s ease-in-out forwards;
+    z-index: 1;
+}
+
+.countdown-number.countdown-3 {
+    opacity: 0;
+    animation: fadeIn 3s 1s;
+}
+
+.countdown-number.countdown-2 {
+    opacity: 0;
+    animation: fadeIn 3s  4s;
+}
+
+.countdown-number.countdown-1 {
+    opacity: 0;
+    animation: fadeIn 3s  7s;
+}
+
+.countdown-text {
+    opacity: 0;
+    animation: fadeIn 3s  10s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

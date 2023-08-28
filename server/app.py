@@ -72,7 +72,7 @@ class FighterResource(Resource):
                 {
                     'id': fighter.id,
                     'name': fighter.name,
-
+                    'image': fighter.image,
                     'hp': fighter.hp,
                     'ap': fighter.ap
                 }
@@ -84,7 +84,7 @@ class FighterResource(Resource):
             fighter_data = {
                 'id': fighter.id,
                 'name': fighter.name,
-
+                'image': fighter.image,
                 'hp': fighter.hp,
                 'ap': fighter.ap
             }

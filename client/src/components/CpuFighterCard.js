@@ -1,14 +1,20 @@
-// CpuFighterCard.js
 import React from 'react';
 import '../styling/fightercard.css';
 
-function CpuFighterCard() {
-    return (
-        <div className="fighter-card">
-            <h2>CPU</h2>
-            {/* Add content specific to CpuFighterCard */}
-        </div>
-    );
+function CpuFighterCard({ fighter }) {
+  return (
+    <div className="fighter-card">
+      <h2>CPU</h2>
+      {fighter && (
+        <>
+          <img src={fighter.image} alt={fighter.name} />
+          <div> {fighter.name}</div>
+          <div>HP: {fighter.hp}</div>
+          <div>Attack: {fighter.ap}</div>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default CpuFighterCard;

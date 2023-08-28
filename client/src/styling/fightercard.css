@@ -1,8 +1,20 @@
 .fighter-card {
+    font-family: 'Darbots', sans-serif;
     font-size: 24px;
-    text-align: center;
     color: rgb(255, 255, 255);
     background-color: rgba(34, 17, 51, 0.65);
-    width: 300px;
-    height: 400px;
+    width: 350px;
+    height: 450px;
+}
+
+.fighter-card img{
+    width: 160px;
+    height: 160px;
+    opacity: 0.8;
+    border-radius: 100px;
+}
+
+.card-title{
+    text-align: center;
+    font-family: 'Games', sans-serif; 
 }
