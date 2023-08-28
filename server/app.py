@@ -21,6 +21,7 @@ class AuthLoginResource(Resource):
         else:
             return {'message': 'Invalid username or password'}, 401
 
+
 class AuthSignupResource(Resource):
     def post(self):
         data = request.get_json()
@@ -34,6 +35,7 @@ class AuthSignupResource(Resource):
         db.session.add(new_user)
         db.session.commit()
         return {'message': 'User created successfully'}, 201
+
 
 class UserResource(Resource):
     def get(self, user_id=None):
@@ -64,6 +66,7 @@ class UserResource(Resource):
         db.session.commit()
         return {'message': 'User deleted successfully'}
 
+
 class FighterResource(Resource):
     def get(self, fighter_id=None):
         if fighter_id is None:
@@ -73,6 +76,7 @@ class FighterResource(Resource):
                     'id': fighter.id,
                     'name': fighter.name,
                     'image': fighter.image,
+                    'sprite': fighter.sprite,
                     'hp': fighter.hp,
                     'ap': fighter.ap
                 }
@@ -85,6 +89,7 @@ class FighterResource(Resource):
                 'id': fighter.id,
                 'name': fighter.name,
                 'image': fighter.image,
+                'sprite': fighter.sprite,
                 'hp': fighter.hp,
                 'ap': fighter.ap
             }
