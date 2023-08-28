@@ -68,12 +68,28 @@ class FighterResource(Resource):
     def get(self, fighter_id=None):
         if fighter_id is None:
             fighters = Fighter.query.all()
-            fighters_data = [{'id': fighter.id, 'name': fighter.name} for fighter in fighters]
-            return jsonify(fighters_data)
+            fighters_data = [
+                {
+                    'id': fighter.id,
+                    'name': fighter.name,
+
+                    'hp': fighter.hp,
+                    'ap': fighter.ap
+                }
+                for fighter in fighters
+            ]
+            return jsonify(fighters_data)   
         else:
             fighter = Fighter.query.get_or_404(fighter_id)
-            fighter_data = {'id': fighter.id, 'name': fighter.name}
+            fighter_data = {
+                'id': fighter.id,
+                'name': fighter.name,
+
+                'hp': fighter.hp,
+                'ap': fighter.ap
+            }
             return jsonify(fighter_data)
+
 
 class MatchResource(Resource):
     def get(self, user_id=None):
@@ -83,6 +99,7 @@ class MatchResource(Resource):
             matches = Match.query.filter_by(user_id=user_id).all() 
         matches_data = [match.to_dict(only=('id', 'win_loss', 'fighter1_id', 'fighter2_id')) for match in matches]
         return jsonify(matches_data)
+
 
 
 api.add_resource(AuthLoginResource, '/auth/login')

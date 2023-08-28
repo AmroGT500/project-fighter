@@ -15,19 +15,19 @@ def create_mock_data():
         db.session.add_all([user1, user2])
         db.session.commit()
 
-        # Create mock fighters
-        fighter1 = Fighter(name='Ryu', hp=100, ap=20)
-        fighter2 = Fighter(name='Chun-Li', hp=120, ap=15)
-        fighter3 = Fighter(name='Sub-Zero', hp=110, ap=18)
-        fighter4 = Fighter(name='Scorpion', hp=105, ap=19)
-        fighter5 = Fighter(name='Mario', hp=90, ap=25)
-        fighter6 = Fighter(name='Luigi', hp=95, ap=23)
-        fighter7 = Fighter(name='Link', hp=105, ap=18)
-        fighter8 = Fighter(name='Samus', hp=110, ap=16)
-        fighter9 = Fighter(name='Sonic', hp=85, ap=28)
-        fighter10 = Fighter(name='Mega Man', hp=95, ap=22)
-        fighter11 = Fighter(name='Donkey Kong', hp=120, ap=14)
-        fighter12 = Fighter(name='Pikachu', hp=80, ap=30)
+
+        fighter1 = Fighter(name='Android 18', hp=150, ap=25)
+        fighter2 = Fighter(name='Bardock', hp=140, ap=20)
+        fighter3 = Fighter(name='Broly', hp=200, ap=17)
+        fighter4 = Fighter(name='Cell', hp=135, ap=23)
+        fighter5 = Fighter(name='Frieza', hp=130, ap=23)
+        fighter6 = Fighter(name='Future Trunks', hp=140, ap=25)
+        fighter7 = Fighter(name='Goku', hp=185, ap=25)
+        fighter8 = Fighter(name='Kid Buu', hp=130, ap=28)
+        fighter9 = Fighter(name='Krillin', hp=120, ap=20)
+        fighter10 = Fighter(name='Piccolo', hp=130, ap=23)
+        fighter11 = Fighter(name='Teen Gohan', hp=150, ap=30)
+        fighter12 = Fighter(name='Vegeta', hp=140, ap=28)
         
         db.session.add_all([
             fighter1, fighter2, fighter3, fighter4,

@@ -24,7 +24,7 @@
 }
 
 .go-back-button:hover {
-    background-color: #006a13e0;
+    background-color: rgb(6, 170, 0);
     transform: scale(1.1);
 }
 
@@ -38,21 +38,43 @@
 }
 
 .fighter-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border-collapse: collapse;
+    align-items: center;
+    font-family: 'Darbots', sans-serif;
     height: 300px;
     width: 650px;
-    border: 2px solid #ffffff;
-    background-color: rgba(0, 0, 0, 0.60);
-    box-shadow: 0px 0px 10px #ffffff;
-    box-shadow: 0px 0px 10px blue;
+    border: 0px solid transparent;
     grid-column: span 3;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    --border-size: 3px;
+    --border-angle: 0turn;
+    background-image: conic-gradient(from var(--border-angle),
+            #213,
+            #112 50%,
+            #213),
+        conic-gradient(from var(--border-angle), transparent 20%, rgba(0, 17, 255, 0.65), rgba(200, 0, 0, 0.65));
+    background-size: calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
+        cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    animation: bg-spin 20s linear infinite;
 }
 
-.user-card {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    flex: 1;
+@keyframes bg-spin {
+    to {
+        --border-angle: 1turn;
+    }
+}
+
+@property --border-angle {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0turn;
 }
 
 .vs-title {
@@ -65,10 +87,57 @@
     flex: 1;
 }
 
+.user-card,
 .Cpu-card {
     display: flex;
     align-items: center;
     text-align: center;
     flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.user-card {
+    text-shadow: -5px 5px 3px blue;
+    box-shadow: 0px 0px 10px blue;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 255, 0.65),
+            rgba(0, 0, 255, 0.45),
+            rgba(0, 0, 255, 0.25),
+            rgba(0, 0, 255, 0.10),
+            transparent);
+    background-size: 100% 400%;
+    animation: fieryEffect 20s ease-in-out infinite;
+}
+
+.Cpu-card {
+    text-shadow: -5px 5px 3px rgb(255, 0, 0);
+    box-shadow: 0px 0px 10px rgb(255, 0, 0);
+    background: linear-gradient(to bottom,
+            rgba(255, 0, 0, 0.65),
+            rgba(255, 0, 0, 0.45),
+            rgba(255, 0, 0, 0.25),
+            rgba(255, 0, 0, 0.10),
+            transparent);
+    background-size: 100% 400%;
+    animation: fieryEffect 20s ease-in-out infinite;
+}
+
+@keyframes fieryEffect {
+
+    0%,
+    100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 0 100%;
+    }
+}
+
+.fighter-card{
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
 }
 

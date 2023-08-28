@@ -1,25 +1,41 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../context/user';
 import UserFighterCard from './UserFighterCard';
 import CpuFighterCard from './CpuFighterCard'; 
-import FighterList from './FighterList';
 import '../styling/fight-setup.css'; 
 
 function FightSetup() {
-  const navigate = useNavigate();
+  const {user, setUser} = useContext(UserContext);
+  const [fighters, setFighters] = useState([]);
 
-  const handleGoBack = () => {
-    navigate(-1); 
-  };
+  useEffect(() => {
+    fetch('/fighters')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setFighters(data);
+      })
+      .catch(error => {
+        console.error('Error fetching fighters:', error);
+      });
+  }, []);
 
   return (
     <div className="fight-setup-container">
-      <button className="go-back-button" onClick={handleGoBack}>Go Back</button>
-      
+
       <div className="fighters-container">
 
         <div className="fighter-list">
-          <FighterList />
+          {fighters.map(fighter => (
+            <div key={fighter.id}>
+              <img src={fighter.icon}/>
+              {fighter.name}
+            </div>
+          ))}
         </div>
 
         <div className="user-card">
@@ -31,10 +47,10 @@ function FightSetup() {
         <div className="Cpu-card">
           <CpuFighterCard />
         </div>
-
       </div>
     </div>
   );
 }
 
 export default FightSetup;
+
