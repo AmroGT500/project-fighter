@@ -22,7 +22,7 @@ const MatchHistory = ({ user_id }) => {
         console.error('Error fetching fighters:', error);
       });
   }, []);
-
+  
   return (
     <div className='match-history-wrapper'>
       <h1 className='match-history-title'>Match History</h1>
@@ -37,12 +37,10 @@ const MatchHistory = ({ user_id }) => {
             {matches.map((match, i) => (
               <div key={match.id} className="match-history-list">
                 <div className="match-info">
-
                   <div className="match-data">
                     <div className="win-loss" style={{ color: match.win_loss ? 'green' : 'red' }}>
                       {match.win_loss ? 'Victory' : 'Defeat'}
                     </div>
-
                     <div className="fighter-container">
                     <div className="fighter-image">
                       <img
@@ -52,7 +50,6 @@ const MatchHistory = ({ user_id }) => {
                     </div>
                     <div className='your-fighter'>Your Fighter: {match.fighter1.name}</div>
                   </div>
-
                     <div className="opponent-container">
                     <div className="opponent-image">
                       <img
@@ -62,7 +59,6 @@ const MatchHistory = ({ user_id }) => {
                     </div>
                     <div className='opponent'>Opponent: {match.fighter2.name}</div>
                   </div>
-
                   </div>
                 </div>
               </div>

@@ -27,5 +27,7 @@ yarn-error.log*
 *.pem
 *.enc
 *.hash
+*.env
 
-server/encryption.env
+./server/encryption.env
+

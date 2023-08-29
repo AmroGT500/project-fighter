@@ -11,7 +11,7 @@ function Profile() {
   const [usernameChanged, setUsernameChanged] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
   const [typedUsername, setTypedUsername] = useState('');
-  const username = user.username;
+  const username = user?.username;
   const [fighters, setFighters] = useState([]);
   const [recentMatches, setRecentMatches] = useState([]);
   const matches = user && user.matches;
@@ -40,7 +40,7 @@ function Profile() {
 
   useEffect(() => {
     let currentIndex = 0;
-
+    setTypedUsername('');
     const typingInterval = setInterval(() => {
       if (currentIndex === username.length) {
         clearInterval(typingInterval);
@@ -151,61 +151,63 @@ function Profile() {
           <p>Losses: {losses()}</p>
           <p>Winrate: {winrate()}</p>
         </div>
-
-          <div className='top-fighters'>
+        <div className='top-fighters'>
           <div className="top-fighters-header" colSpan="3">
-          <h3>Recently Played Fighters</h3>
-        </div>
+            <h3>Recent Wins by Fighter</h3>
+          </div>
           {recentMatches.slice(-3).reverse().map(match => {
             const fighterInfo1 = fighters.find(fighter => fighter.id === match.fighter1.id);
+            const fighterInfo2 = fighters.find(fighter => fighter.id === match.fighter2.id);
             return (
               <div key={match.id} className='recent-fighter-list'>
                 <div className='recent-fighter-image'>
                   <img src={fighterInfo1?.image} alt={fighterInfo1?.name} />
                 </div>
+                <div className='recent-fighter-image'>
+                  <img src={fighterInfo2?.image} alt={fighterInfo2?.name} />
+                </div>
               </div>
             );
           })}
         </div>
-
-      <div className='toggle-container'>
-        <div className='toggle-username'>
-          <button className='toggle-button' onClick={() => setShowChangeUsername(!showChangeUsername)}>Change Username</button>
-          {showChangeUsername && (
-            <div className='profile-section'>
-              <h3>Change Username</h3>
-              <input
-                type='text'
-                placeholder='New Username'
-                value={newUsername}
-                onChange={handleUsernameChange}
-                className='custom-input'
-              />
-              <button className='update-button' onClick={handleUpdateUsername}>Update Username</button>
-            </div>
-          )}
-          {usernameChanged && (
-            <div className='popup-message'>Username changed successfully!</div>
-          )}
-        </div>
-        <div className='toggle-password'>
-          <button className='toggle-button' onClick={() => setShowChangePassword(!showChangePassword)}>Change Password</button>
-          {showChangePassword && (
-            <div className='profile-section'>
-              <h3>Change Password</h3>
-              <input
-                type='password'
-                placeholder='New Password'
-                value={newPassword}
-                onChange={handlePasswordChange}
-                className='custom-input'
-              />
-              <button className='update-button' onClick={handleUpdatePassword}>Update Password</button>
-            </div>
-          )}
-          {passwordChanged && (
-            <div className='popup-message'>Password changed successfully!</div>
-          )}
+        <div className='toggle-container'>
+          <div className='toggle-username'>
+            <button className='toggle-button' onClick={() => setShowChangeUsername(!showChangeUsername)}>Change Username</button>
+            {showChangeUsername && (
+              <div className='profile-section'>
+                <h3>Change Username</h3>
+                <input
+                  type='text'
+                  placeholder='New Username'
+                  value={newUsername}
+                  onChange={handleUsernameChange}
+                  className='custom-input'
+                />
+                <button className='update-button' onClick={handleUpdateUsername}>Update Username</button>
+              </div>
+            )}
+            {usernameChanged && (
+              <div className='popup-message'>Username changed successfully!</div>
+            )}
+          </div>
+          <div className='toggle-password'>
+            <button className='toggle-button' onClick={() => setShowChangePassword(!showChangePassword)}>Change Password</button>
+            {showChangePassword && (
+              <div className='profile-section'>
+                <h3>Change Password</h3>
+                <input
+                  type='password'
+                  placeholder='New Password'
+                  value={newPassword}
+                  onChange={handlePasswordChange}
+                  className='custom-input'
+                />
+                <button className='update-button' onClick={handleUpdatePassword}>Update Password</button>
+              </div>
+            )}
+            {passwordChanged && (
+              <div className='popup-message'>Password changed successfully!</div>
+            )}
           </div>
         </div>
       </div>

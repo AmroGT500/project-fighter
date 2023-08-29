@@ -62,10 +62,8 @@ class Fighter(db.Model, SerializerMixin):
     hp = db.Column(db.Integer)
     ap = db.Column(db.Integer)
     image = db.Column(db.String)
+    image_strip = db.Column(db.String)
     sprite_pose = db.Column(db.String)
-    sprite_punch = db.Column(db.String)
-    sprite_kick = db.Column(db.String)
-    sprite_block = db.Column(db.String)
     
     # RELATIONSHIPS
     matches_fighter1 = db.relationship('Match', foreign_keys= 'Match.fighter1_id', back_populates='fighter1')

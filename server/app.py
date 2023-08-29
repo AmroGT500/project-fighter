@@ -76,10 +76,8 @@ class FighterResource(Resource):
                     'id': fighter.id,
                     'name': fighter.name,
                     'image': fighter.image,
+                    'image_strip': fighter.image_strip,
                     'sprite_pose': fighter.sprite_pose,
-                    'sprite_punch': fighter.sprite_punch,
-                    'sprite_kick': fighter.sprite_kick,
-                    'sprite_defend': fighter.sprite_block,
                     'hp': fighter.hp,
                     'ap': fighter.ap
                 }
@@ -92,10 +90,8 @@ class FighterResource(Resource):
                 'id': fighter.id,
                 'name': fighter.name,
                 'image': fighter.image,
+                'image_strip': fighter.image_strip,
                 'sprite_pose': fighter.sprite_pose,
-                'sprite_punch': fighter.sprite_punch,
-                'sprite_kick': fighter.sprite_kick,
-                'sprite_defend': fighter.sprite_block,
                 'hp': fighter.hp,
                 'ap': fighter.ap
             }

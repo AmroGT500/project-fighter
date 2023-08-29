@@ -1,23 +1,29 @@
 .fighter-card {
     font-family: 'Darbots', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column; 
-    justify-content: space-between;
-    align-items: center; 
-    width: 300px;
-    padding: 5px;
+    display: grid; 
+    grid-template-columns: auto 1fr; 
+    grid-template-rows: auto repeat(3, minmax(50px, auto)); 
+    gap: 5px; 
+    width: 250px;
+    padding: 20px;
 }
 
 .fighter-card img{
-    width: 160px;
-    height: 160px;
-    opacity: 0.8;
-    border-radius: 50px;
+    padding: 5px;
+    grid-row: span 3;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    border: solid 2px rgb(0, 255, 85, 0.55);
+    border-radius: 20px;
+    align-items: center;
 }
 
 .card-title{
+    padding: 5px;
+    grid-column: 1 / span 2; 
     text-align: center;
     font-family: 'Games', sans-serif; 
 }

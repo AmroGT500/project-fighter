@@ -62,23 +62,20 @@ function FightSetup() {
               onClick={() => handleUserFighterSelect(fighter)}
             >
               <div className="image-container">
-                <img src={fighter.image} alt={fighter.name} />
+                <img src={fighter.image_strip} alt={fighter.name} />
               </div>
               <div className="fighter-name">{fighter.name}</div>
             </div>
           ))}
         </div>
-
         <div className="user-card">
           <UserFighterCard fighter={selectedUserFighter} />
         </div>
-
         <h1 className="vs-title"> -- vs --</h1>
         
         <div className="Cpu-card">
           <CpuFighterCard fighter={selectedCpuFighter} />
         </div>
-
         {confirmUserSelection && (
           <button className="toggle-button" onClick={handleConfirmSelection}>
             Confirm?
@@ -88,7 +85,6 @@ function FightSetup() {
       {startBattle && (
         <div className="countdown-sequence">
           <div className="fade-screen" />
-
           <div className="countdown-number countdown-3">3</div>
           <div className="countdown-number countdown-2">2</div>
           <div className="countdown-number countdown-1">1</div>
