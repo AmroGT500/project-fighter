@@ -1,53 +1,58 @@
-// import React, { useEffect } from 'react';
-// import { useBattleContext } from './BattleContext';
+// import React, { useContext, useState, useEffect } from 'react';
+// import { useNavigate, useLocation } from 'react-router-dom';
+// import { UserContext } from '../context/user';
 
 // function Battle() {
-//   const { player1, setPlayer1, player2, setPlayer2 } = useBattleContext();
+//     const location = useLocation();
+//     const userFighter = location.state.userFighter;
+//     const cpuFighter = location.state.cpuFighter;
 
-//   const performAttack = (attacker, defender, isSuperAttack) => {
-//     const damage = isSuperAttack ? Math.ceil(attacker.ap * 1.667) : attacker.ap;
-//     defender.hp -= damage;
+//     const { user } = useContext(UserContext);
+//     const navigate = useNavigate();
 
-//     if (isSuperAttack) {
-//       attacker.superAttackCooldown = 3;
-//       attacker.attackCount = 0;
-//     } else {
-//       attacker.attackCount += 1;
-//       if (attacker.attackCount >= 3) {
-//         // Enable super attack button
-//       }
-//     }
+//     const [userHP, setUserHP] = useState(userFighter.hp);
+//     const [cpuHP, setCpuHP] = useState(cpuFighter.hp);
+//     const [userCooldown, setUserCooldown] = useState(0);
+//     const [cpuCooldown, setCpuCooldown] = useState(0);
+//     const [battleLog, setBattleLog] = useState([]);
+//     const [battleOver, setBattleOver] = useState(false);
 
-//     // Check if defender is defeated
-//     if (defender.hp <= 0) {
-//       // Display victory/defeat message
-//     }
+//     useEffect(() => {
+//         // Implement the battle logic here
 
-//     // Update state
-//     if (attacker === player1) {
-//       setPlayer1({ ...attacker });
-//       setPlayer2({ ...defender });
-//     } else {
-//       setPlayer1({ ...defender });
-//       setPlayer2({ ...attacker });
-//     }
+//         // Perform CPU attack
 
-//     // Switch turns
-//     // Update UI elements
-//   };
+//         // Check for battle outcome
 
-//   const handleAttack = (attacker, defender, isSuperAttack) => {
-//     performAttack(attacker, defender, isSuperAttack);
-//     // Switch turns
-//   };
+//     }, [userCooldown, userHP, cpuCooldown, cpuHP, userFighter.ap, cpuFighter.ap]);
 
-//   return (
-//     <div className="battle-container">
-//       <button onClick={() => handleAttack(player1, player2, false)}>Punch</button>
-//       <button onClick={() => handleAttack(player1, player2, false)}>Kick</button>
-//       <button onClick={() => handleAttack(player1, player2, true)} disabled={player1.attackCount < 3}>Super Attack</button>
-//     </div>
-//   );
+//     const handleAttack = (attackType) => {
+//         // Implement the attack logic 
+
+//         // Update user and CPU HP
+
+//         // Update battle log
+
+//         // Handle battle outcome
+
+//         // Reset cooldowns
+//     };
+
+//     const handleTryAgain = () => {
+//         // Reset battle and create new instance of a match
+//     };
+
+//     const handleChooseNewFighter = () => {
+//         // Navigate to fighter setup screen
+//     };
+
+//     const handleExit = () => {
+//         // Navigate back to profile
+//     };
+
+//     return (
+//         // battle UI 
+//     )
 // }
 
 // export default Battle;

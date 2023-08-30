@@ -11,7 +11,7 @@ def create_mock_data():
 
         # Create mock users
         user1 = User(username='user1', password='12345')
-        user2 = User(username='user2', password='hashed_password2')
+        user2 = User(username='user2', password='12345')
         db.session.add_all([user1, user2])
         db.session.commit()
 

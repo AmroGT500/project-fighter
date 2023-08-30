@@ -106,7 +106,17 @@ class MatchResource(Resource):
             matches = Match.query.filter_by(user_id=user_id).all() 
         matches_data = [match.to_dict(only=('id', 'win_loss', 'fighter1_id', 'fighter2_id')) for match in matches]
         return jsonify(matches_data)
+    
+    def post(self):
+        data = request.get_json()
+        fighter1_id = data.get('fighter1_id')
+        fighter2_id = data.get('fighter2_id')
+        win_loss = data.get('win_loss')  
 
+        new_match = Match(fighter1_id=fighter1_id, fighter2_id=fighter2_id, win_loss=win_loss)
+        db.session.add(new_match)
+        db.session.commit()
+        return {'message': 'Match created successfully'}, 201
 
 
 api.add_resource(AuthLoginResource, '/auth/login')

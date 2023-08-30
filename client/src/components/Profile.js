@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import '../styling/profile.css';
 import { UserContext } from '../context/user';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
   const { user, setUser } = useContext(UserContext);
@@ -15,6 +16,8 @@ function Profile() {
   const [fighters, setFighters] = useState([]);
   const [recentMatches, setRecentMatches] = useState([]);
   const matches = user && user.matches;
+  const navigate = useNavigate();
+  const [showDeletePrompt, setShowDeletePrompt] = useState(false);
 
   useEffect(() => {
     async function fetchFighters() {
@@ -120,6 +123,25 @@ function Profile() {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    setShowDeletePrompt(false);
+
+    try {
+      const response = await fetch(`/users/${user.id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setUser(null);
+        navigate('/authentication');
+      } else {
+        console.error('Failed to delete account');
+      }
+    } catch (error) {
+      console.error('Error deleting account:', error);
+    }
+  };
+
   function wins() {
     return user.matches.filter(match => match.win_loss).length;
   }
@@ -170,7 +192,9 @@ function Profile() {
             );
           })}
         </div>
+
         <div className='toggle-container'>
+
           <div className='toggle-username'>
             <button className='toggle-button' onClick={() => setShowChangeUsername(!showChangeUsername)}>Change Username</button>
             {showChangeUsername && (
@@ -185,11 +209,13 @@ function Profile() {
                 />
                 <button className='update-button' onClick={handleUpdateUsername}>Update Username</button>
               </div>
+              
             )}
             {usernameChanged && (
               <div className='popup-message'>Username changed successfully!</div>
             )}
           </div>
+
           <div className='toggle-password'>
             <button className='toggle-button' onClick={() => setShowChangePassword(!showChangePassword)}>Change Password</button>
             {showChangePassword && (
@@ -209,10 +235,23 @@ function Profile() {
               <div className='popup-message'>Password changed successfully!</div>
             )}
           </div>
+          <div className='toggle-delete'>
+            <button className='toggle-button' onClick={() => setShowDeletePrompt(true)}>Delete Account</button>
+            {showDeletePrompt && (
+              <div className='profile-section'>
+                <p className='delete-prompt-message'>Are you sure you want to delete your account?</p>
+                <div className='delete-prompt-buttons'>
+                  <button className='confirm-button' onClick={handleDeleteAccount}>Confirm</button>
+                  <button className='cancel-button' onClick={() => setShowDeletePrompt(false)}>Cancel</button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
+  
 }
 
 export default Profile;

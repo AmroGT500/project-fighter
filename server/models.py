@@ -11,7 +11,7 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
 
     # RELATIONSHIPS
-    matches = db.relationship('Match', back_populates='user')
+    matches = db.relationship('Match', back_populates='user', cascade = "all, delete-orphan")
 
     # ASSOCIATION PROXY
     # fighters = association_proxy('matches' , 'fighter') 

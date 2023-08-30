@@ -27,7 +27,7 @@ function FightSetup() {
     setStartBattle(true);
 
     setTimeout(() => {
-      navigate('/battle');
+      navigate('/battle', { state: { userFighter: selectedUserFighter, cpuFighter: fighters[randomIndex] } });
     }, 12000); 
 
   };
