@@ -141,26 +141,36 @@ function Profile() {
       console.error('Error deleting account:', error);
     }
   };
-
+  
   function wins() {
-    return user.matches.filter(match => match.win_loss).length;
+    if (user && user.matches) {
+      return user.matches.filter(match => match.win_loss).length;
+    }
+    return 0; 
   }
-
+  
   function losses() {
-    return user.matches.filter(match => !match.win_loss).length;
+    if (user && user.matches) {
+      return user.matches.filter(match => !match.win_loss).length;
+    }
+    return 0; 
   }
-
+  
   function winrate() {
-    const totalMatches = user.matches.length;
-
-    if (totalMatches === 0) {
+    if (user && user.matches) {
+      const totalMatches = user.matches.length;
+  
+      if (totalMatches === 0) {
+        return 'No matches recorded';
+      }
+  
+      const totalWins = wins();
+      return (totalWins / totalMatches * 100).toFixed(2) + '%';
+    } else {
       return 'No matches recorded';
     }
-
-    const totalWins = wins();
-    return (totalWins / totalMatches * 100).toFixed(2) + '%';
   }
-
+  
   return (
     <div className='profile-wrapper'>
       <div className='profile-container'>

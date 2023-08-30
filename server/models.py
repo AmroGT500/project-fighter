@@ -38,7 +38,7 @@ class Match(db.Model, SerializerMixin):
     __tablename__ = 'matches'
 
     id = db.Column(db.Integer, primary_key=True)
-    win_loss = db.Column(db.Boolean)
+    win_loss = db.Column(db.Boolean, nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     fighter1_id = db.Column(db.Integer, db.ForeignKey('fighters.id'), nullable=False)

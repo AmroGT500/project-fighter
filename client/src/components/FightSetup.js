@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/user';
 import UserFighterCard from './UserFighterCard';
 import CpuFighterCard from './CpuFighterCard'; 
@@ -28,9 +28,12 @@ function FightSetup() {
 
     setTimeout(() => {
       navigate('/battle', { state: { userFighter: selectedUserFighter, cpuFighter: fighters[randomIndex] } });
-    }, 12000); 
+    }, 5000); 
 
   };
+
+  useEffect(() => {
+  })
 
   useEffect(() => {
     fetch('/fighters')

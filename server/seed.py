@@ -16,12 +16,12 @@ def create_mock_data():
         db.session.commit()
 
 
-        fighter1 = Fighter(name='Cell', image='https://i.imgur.com/EajHyQY.png', hp=200, ap=18, sprite_pose='https://i.imgur.com/96Xfrds.png', image_strip= 'https://i.imgur.com/NDqaRAt.png')
-        fighter2 = Fighter(name='Frieza', image='https://i.imgur.com/ijy3OdR.png', hp=180, ap=20, sprite_pose='https://i.imgur.com/gA6MhHA.png', image_strip= 'https://i.imgur.com/wv7ChTp.png')
-        fighter3 = Fighter(name='Goku', image='https://i.imgur.com/bX7SWvp.png', hp=200, ap=25, sprite_pose='https://i.imgur.com/17NALy9.png', image_strip= 'https://i.imgur.com/WzfAJHY.png')
-        fighter4 = Fighter(name='Kid Buu', image='https://i.imgur.com/eNO6RfM.png', hp=170, ap=30, sprite_pose='https://i.imgur.com/G5EAsdB.png', image_strip= 'https://i.imgur.com/zpjiOCb.png')
-        fighter5 = Fighter(name='Piccolo', image='https://i.imgur.com/qPtuqPy.png', hp=175, ap=22, sprite_pose='https://i.imgur.com/vF0UPVQ.png', image_strip= 'https://i.imgur.com/dbjZqRi.png')
-        fighter6 = Fighter(name='Vegeta', image='https://i.imgur.com/apPD4jT.png', hp=195, ap=26, sprite_pose='https://i.imgur.com/ROhXGMX.png', image_strip= 'https://i.imgur.com/JAfEiav.png')
+        fighter1 = Fighter(name='Cell', image='https://i.imgur.com/EajHyQY.png', hp=200, ap=18, sprite_pose='https://i.imgur.com/96Xfrds.png', image_strip= 'https://i.imgur.com/wQ91VVH.png')
+        fighter2 = Fighter(name='Frieza', image='https://i.imgur.com/ijy3OdR.png', hp=180, ap=20, sprite_pose='https://i.imgur.com/gA6MhHA.png', image_strip= 'https://i.imgur.com/CaNLQEQ.png')
+        fighter3 = Fighter(name='Goku', image='https://i.imgur.com/bX7SWvp.png', hp=200, ap=25, sprite_pose='https://i.imgur.com/17NALy9.png', image_strip= 'https://i.imgur.com/vfsO2kd.png')
+        fighter4 = Fighter(name='Kid Buu', image='https://i.imgur.com/eNO6RfM.png', hp=170, ap=30, sprite_pose='https://i.imgur.com/G5EAsdB.png', image_strip= 'https://i.imgur.com/o7ypSJ6.png')
+        fighter5 = Fighter(name='Piccolo', image='https://i.imgur.com/qPtuqPy.png', hp=175, ap=22, sprite_pose='https://i.imgur.com/vF0UPVQ.png', image_strip= 'https://i.imgur.com/4cKzkLm.png')
+        fighter6 = Fighter(name='Vegeta', image='https://i.imgur.com/apPD4jT.png', hp=195, ap=26, sprite_pose='https://i.imgur.com/ROhXGMX.png', image_strip= 'https://i.imgur.com/ga2gkhh.png')
 
         
         db.session.add_all([

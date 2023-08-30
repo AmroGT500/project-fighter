@@ -1,0 +1,86 @@
+.fighters-arena {
+    display: flex;
+    justify-content: space-around; 
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.fighter {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 45%; 
+    box-sizing: border-box;
+}
+
+.hp-bar {
+    height: 20px;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.hp-fill {
+    height: 100%;
+    border-radius: 10px;
+    background-color: blue;
+}
+
+.battle-messages-container {
+    margin-top: 20px;
+    background-color: white;
+    height: 300px;
+}
+
+.battle-messages {
+    list-style: none;
+    padding: 0;
+    background-color: white;
+}
+
+.battle-messages li {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #000000;
+    background-color: white;
+}
+
+.wobble {
+    animation: wobble 0.5s ease-in-out infinite;
+}
+
+@keyframes wobble {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+    50% {
+        transform: translateX(5px) rotate(5deg);
+    }
+    75% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+}
+
+/* Style for damage display */
+.damage-display {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.show-damage {
+    display: flex;
+}

@@ -5,14 +5,16 @@ import { UserContext } from '../context/user';
 
 
 const Authentication = () => {
-  const {user, setUser} = useContext(UserContext);
+  const {setUser,} = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [,setLoggedIn] = useState(false);
   const [isSignupMode, setIsSignupMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [signupSuccess, setSignupSuccess] = useState(false);
   const navigate = useNavigate();
+
+
 
   const handleModeToggle = () => {
     setIsSignupMode(!isSignupMode);

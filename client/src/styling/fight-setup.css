@@ -154,15 +154,15 @@
 .image-container img {
     display: block;
     border-radius: 50px;
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     transition: border-color 2000ms;
     opacity: 1;
 }
 
 .fighter-box:hover .image-container img {
-    transform: scale(1.4);
+    transform: scale(1.5);
     transition: transform 2000ms, border-color 2000ms;
     border-color: transparent;
 }
@@ -203,7 +203,7 @@
     color: white;
     text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
     margin-top: 10px;
-    animation: fadeIn 3s infinite;
+    animation: fadeIn 1.5s infinite;
     z-index: 999;
 }
     
@@ -223,28 +223,28 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0);
-    animation: fadeToBlack 3s ease-in-out forwards;
+    animation: fadeToBlack 1.5s ease-in-out forwards;
     z-index: 1;
 }
 
 .countdown-number.countdown-3 {
     opacity: 0;
-    animation: fadeIn 3s 1s;
+    animation: fadeIn 1s 1s;
 }
 
 .countdown-number.countdown-2 {
     opacity: 0;
-    animation: fadeIn 3s  4s;
+    animation: fadeIn 1s  2s;
 }
 
 .countdown-number.countdown-1 {
     opacity: 0;
-    animation: fadeIn 3s  7s;
+    animation: fadeIn 1s  3s;
 }
 
 .countdown-text {
     opacity: 0;
-    animation: fadeIn 3s  10s;
+    animation: fadeIn 1s  4s;
 }
 
 @keyframes fadeIn {

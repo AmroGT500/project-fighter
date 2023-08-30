@@ -37,6 +37,12 @@ class AuthSignupResource(Resource):
         return {'message': 'User created successfully'}, 201
 
 
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return make_response({'message':'You have been successfully logged out!'}, 204)
+
+
 class UserResource(Resource):
     def get(self, user_id=None):
         if user_id is None:
@@ -124,6 +130,7 @@ api.add_resource(AuthSignupResource, '/auth/signup')
 api.add_resource(UserResource, '/users', '/users/<int:user_id>')
 api.add_resource(FighterResource, '/fighters', '/fighters/<int:fighter_id>')
 api.add_resource(MatchResource, '/matches', '/matches/<int:user_id>')
+api.add_resource(Logout, '/logout')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

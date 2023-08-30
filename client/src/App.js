@@ -30,12 +30,14 @@ function AuthenticatedRoutes() {
     <>
       <div className="app-background"></div>
       {<Navbar />}
+
       <Routes>
         <Route path="/profile" element={<Profile />} />
         <Route path="/fight-setup" element={<FightSetup />} />
         <Route path="/match-history" element={<MatchHistory />} />
         <Route path="/battle" element={<Battle />} />
       </Routes>
+
     </>
   );
 }
