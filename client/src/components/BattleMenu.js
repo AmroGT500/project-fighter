@@ -8,11 +8,11 @@ function BattleMenu({ onAbility }) {
     };
 
     return (
-        <div className='ability-buttons'>
-            <button onClick={() => handleUserAbilities("punch")}>Punch</button>
-            <button onClick={() => handleUserAbilities("kick")}>Kick</button>
-            <button onClick={() => handleUserAbilities("block")}>Block</button>
-            <button onClick={() => handleUserAbilities("special")}>Special Attack</button>
+        <div>
+            <button className='ability-buttons' onClick={() => handleUserAbilities("punch")}>Punch</button>
+            <button className='ability-buttons' onClick={() => handleUserAbilities("kick")}>Kick</button>
+            <button className='block-button' onClick={() => handleUserAbilities("block")}>Block</button>
+            <button className='special-button' onClick={() => handleUserAbilities("special")}>Special Attack</button>
         </div>
     );
 }

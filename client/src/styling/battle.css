@@ -1,3 +1,251 @@
-.ability-buttons{
-        
+.battle-title {
+    color: rgba(255, 255, 255);
+    font-size: 60px;
+    font-weight: 500;
+    text-align: center;
+    font-family: 'Games', sans-serif; 
+    text-shadow: -3px 3px 4px rgba(255, 204, 0, 0.8),
+    -4px 4px 5px rgb(0, 0, 0);
+    animation: neon;
+}
+.neon-effect {
+    display: inline-block;
+    position: relative;
+    color: rgb(255, 255, 255);
+    animation: neon 1.5s linear infinite;
+}
+
+@keyframes neon {
+    0%,
+    100% {
+        text-shadow: none;
+    }
+    50% {
+        text-shadow: 0px -1px 15px rgb(0, 255, 50);
+    }
+}
+.battle-wrapper{
+    display: grid;
+    justify-items: center;
+    font-family: 'Darbots', sans-serif;
+}
+
+.fighters-arena {
+    display: flex;
+    justify-content: space-around; 
+    margin-bottom: 20px;
+    width: 700px;
+    height: 450px;
+    background-color: #213;
+    color:#ffffff;
+    border: 0px solid transparent;
+    --border-size: 3px;
+    --border-angle: -2turn;
+    background-image: conic-gradient(from var(--border-angle),
+    #213,
+    #112 50%,
+    #213),
+    conic-gradient(from var(--border-angle), transparent 20%, rgba(0, 17, 255, 0.80), rgba(200, 0, 0, 0.80));
+    background-size: calc(100% - (var(--border-size) * 5)) calc(100% - (var(--border-size) * 5)), cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    animation: bg-spin 10s linear infinite;
+    }
+
+@keyframes bg-spin {
+to {
+--border-angle: 1turn;
+}
+}
+
+@property --border-angle {
+syntax: "<angle>";
+inherits: true;
+initial-value: 0turn;
+}
+
+.user-fighter {
+    border-top: 7px solid rgba(0, 0, 255, 0.30);
+    border-bottom: 7px solid rgba(0, 0, 255, 0.30);
+    padding: 10px;
+    width: 45%; 
+    box-sizing: border-box;
+    background: linear-gradient(to bottom,
+    rgba(0, 0, 255, 0.30),
+    rgba(0, 0, 255, 0.20),
+    rgba(0, 0, 255, 0.10),
+    rgba(0, 0, 255, 0.05),
+    transparent);
+    background-size: 100% 450%;
+    animation: fieryEffect 10s ease-in-out infinite;
+}
+
+.user-fighter img {
+    height: 60%;
+}
+.cpu-fighter img {
+    height: 60%;
+}
+
+.cpu-fighter {
+    border-top: 7px solid  rgba(255, 0, 0, 0.30);
+    border-bottom: 7px solid  rgba(255, 0, 0, 0.30);
+    padding: 10px;
+    width: 45%; 
+    box-sizing: border-box;
+    background: linear-gradient(to bottom,
+    rgba(255, 0, 0, 0.30),
+    rgba(255, 0, 0, 0.20),
+    rgba(255, 0, 0, 0.10),
+    rgba(255, 0, 0, 0.05),
+    transparent);
+    background-size: 100% 450%;
+    animation: fieryEffect 10s ease-in-out infinite;
+}
+
+@keyframes fieryEffect {
+
+    0%,
+    100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 0 100%;
+    }
+}
+
+.hp-bar {
+    height: 20px;
+    border-radius: 10px;
+    background-color: #0000008d;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.user-hp-fill {
+    height: 100%;
+    border-radius: 10px;
+    background-color: rgb(0, 255, 55, 0.65);
+}
+
+.cpu-hp-fill {
+    height: 100%;
+    border-radius: 10px;
+    background-color: rgb(0, 255, 55, 0.65);
+}
+
+.battle-messages-container {
+    margin-top: 20px;
+    text-align: center;
+    background-color: #213;
+    height: 500px;
+    width: 700px;
+    overflow: auto;
+    color: #ffffff;
+}
+
+.battle-messages {
+    list-style: none;
+    padding: 0;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.295);
+}
+
+.battle-messages li {
+    padding-bottom: 10px;
+    font-size: 20px;
+    color: #ffffff;
+
+}
+
+.ability-buttons,
+.end-button,
+.special-button,
+.block-button {
+    background-color: rgba(0, 70, 150);
+    color: rgb(255, 255, 255);
+    text-shadow: 0px 1px 1px rgb(0, 0, 0);
+    border: none;
+    margin: 10px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 255, 68, 0.50);
+    cursor: pointer;
+    font-family: 'Darbots', sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.ability-buttons:hover,
+.end-button:hover {
+    background-color: rgb(0, 180, 50);
+    text-shadow: -1px 1px 2px rgba(0, 70, 150),
+        -1px 1px 2px rgb(0, 0, 0);
+    transform: scale(1.15);
+}
+
+.block-button:hover{
+    background-color: rgb(220, 220, 0);
+    text-shadow: -1px 1px 2px rgba(0, 70, 150),
+        -1px 1px 2px rgb(0, 0, 0);
+    transform: scale(1.15);
+}
+
+.end-button:hover,
+.special-button:hover {
+    background-color: rgb(220, 0, 0);
+    text-shadow: -1px 1px 2px rgba(0, 70, 150),
+        -1px 1px 2px rgb(0, 0, 0);
+    transform: scale(1.15);
+} 
+
+.user-hp-fill,
+.cpu-hp-fill {
+    transition: width 0.7s ease;
+}
+
+@keyframes burst {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.user-hp-fill.burst,
+.cpu-hp-fill.burst {
+    animation: burst 0.7s ease forwards;
+}
+
+.end-message{
+    display: flex;
+    font-size: 24px;
+    color:#ffffff;
+    width: 475px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.battle-messages-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.battle-messages-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 255, 0.5);
+    border-radius: 8px;
+}
+
+.battle-messages-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(0, 180, 50);
+}
+
+.battle-messages-container::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
 }

@@ -38,8 +38,6 @@ const handleAttack = (attacker, defender) => {
     return [defender.hp - attacker.ap, `${attacker.name} ${attacker.ability}ed`]
 }
 
-// FIXED IT, BRB GETTING WATER!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 function Battle() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -71,7 +69,7 @@ function Battle() {
         let userCd = specialAttackCooldown
         let cpuCd = cpuSpecialAttackCooldown
         let cpuAbility = getRandom(['kick', 'punch', 'block', 'special'])
-        let newMessages = [...messages, `======= TURN ${turn + 1} =======`]
+        let newMessages = [...messages, `=============== TURN ${turn + 1} ===============`]
 
         while (cpuAbility === 'special' && cpuCd > 0) {
             cpuAbility = getRandom(['kick', 'punch', 'block', 'special'])
@@ -167,27 +165,28 @@ function Battle() {
     };
 
     return (
-        <div>
-            <h1>Battle</h1>
+        <div className="battle-wrapper">
+            <h1 className='battle-title'>
+                <span className='neon-effect'>FIGHT!</span></h1>
             <div className="fighters-arena">
-                <div className="fighter">
+                <div className="user-fighter">
                     <h2>{userFighter.name}</h2>
                     <img src={userFighter.image_strip} alt={userFighter.name} />
                     <div className="hp-bar">
                         <div
-                            className="hp-fill"
+                            className="user-hp-fill"
                             style={{ width: `${(userHP / userFighter.hp) * 100}%` }}
                         />
                     </div>
                     <p>HP: {userHP}</p>
                     <p>Special Cooldown: {specialAttackCooldown > 0 ? `${specialAttackCooldown} Turns` : 'Available!'}</p>
                 </div>
-                <div className="fighter">
+                <div className="cpu-fighter">
                     <h2>{cpuFighter.name}</h2>
                     <img src={cpuFighter.image_strip} alt={cpuFighter.name} />
                     <div className="hp-bar">
                         <div
-                            className="hp-fill"
+                            className="cpu-hp-fill"
                             style={{ width: `${(cpuHP / cpuFighter.hp) * 100}%` }}
                         />
                     </div>
@@ -197,13 +196,13 @@ function Battle() {
             </div>
             {matchOutcome === null && <BattleMenu onAbility={handleAttacks} />}
             {matchOutcome !== null && (
-                <div>
+                <div className='end-message'>
                     {matchOutcome ? <p>You won the match!</p> : <p>You lost the match.</p>}
-                    <button onClick={handleUpdateMatchOutcome}>End Match</button>
+                    <button className='end-button' onClick={handleUpdateMatchOutcome}>End Match</button>
                 </div>
             )}
             <div className="battle-messages-container">
-                <h2>Battle Messages</h2>
+                <h2>Battle Log</h2>
                 <ul className="battle-messages">
                     {messages.map((message, index) => (
                         <li key={index}>{message}</li>
