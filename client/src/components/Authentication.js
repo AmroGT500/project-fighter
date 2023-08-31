@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import '../styling/authentication.css';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { UserContext } from '../context/user';
 
 
@@ -12,8 +12,7 @@ const Authentication = () => {
   const [isSignupMode, setIsSignupMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [signupSuccess, setSignupSuccess] = useState(false);
-  const navigate = useNavigate();
-
+  const history = useHistory();
 
 
   const handleModeToggle = () => {
@@ -36,7 +35,7 @@ const Authentication = () => {
         const data = await response.json();
         setLoggedIn(true);
         setUser(data)
-        navigate(`/profile`);
+        history.push(`/profile`);
       } else {
         setErrorMessage('Invalid username or password.');
       }

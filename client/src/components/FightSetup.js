@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../context/user';
+import React, { useState, useEffect} from 'react';
+// import { UserContext } from '../context/user';
 import UserFighterCard from './UserFighterCard';
 import CpuFighterCard from './CpuFighterCard'; 
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import '../styling/fight-setup.css'; 
 
 function FightSetup() {
-  const { user, setUser } = useContext(UserContext);
+  // const { user, setUser } = useContext(UserContext);
   const [fighters, setFighters] = useState([]);
   const [selectedUserFighter, setSelectedUserFighter] = useState(null);
   const [selectedCpuFighter, setSelectedCpuFighter] = useState(null);
   const [confirmUserSelection, setConfirmUserSelection] = useState(false);
   const [startBattle, setStartBattle] = useState(false);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleUserFighterSelect = (fighter) => {
     setSelectedUserFighter(fighter);
@@ -27,13 +27,10 @@ function FightSetup() {
     setStartBattle(true);
 
     setTimeout(() => {
-      navigate('/battle', { state: { userFighter: selectedUserFighter, cpuFighter: fighters[randomIndex] } });
+      history.push('/battle', { state: { userFighter: selectedUserFighter, cpuFighter: fighters[randomIndex] } });
     }, 5000); 
 
   };
-
-  useEffect(() => {
-  })
 
   useEffect(() => {
     fetch('/fighters')

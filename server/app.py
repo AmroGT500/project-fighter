@@ -21,6 +21,15 @@ class AuthLoginResource(Resource):
         else:
             return {'message': 'Invalid username or password'}, 401
 
+class CheckSession(Resource):
+    def get(self):
+        user = User.query.filter_by(id = session.get('user_id')).first() 
+        if user is not None:
+            return {'message': 'Session is active', 'user': user}, 200
+        else:
+            return {'message': 'No active session', 'user_id': None}, 401
+
+api.add_resource(CheckSession, '/check-session')
 
 class AuthSignupResource(Resource):
     def post(self):
@@ -44,33 +53,30 @@ class Logout(Resource):
 
 
 class UserResource(Resource):
-    def get(self, user_id=None):
-        if user_id is None:
-            users = User.query.all()
-            users_data = [user.to_dict() for user in users]
-            return make_response(users_data, 200)
-        else:
-            user = User.query.get(user_id)
-            if user :
-                return make_response(user.to_dict(), 200)
-            else:
-                return make_response({'error' : 'User Not Found'} , 404) 
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            return make_response({'error':'User does not exist'}, 404)
+        return make_response(user.to_dict())
 
-    def patch(self, user_id):
-        user = User.query.get_or_404(user_id)
+    def patch(self, id):
+        user = User.query.get_or_404(id)
         data = request.get_json()
-        if 'username' in data:
-            user.username = data['username']
-        if 'password' in data:
-            user.password = data['password']
+        for attr in data:
+            setattr(user, attr, data[attr])
         db.session.commit()
-        return {'message': 'User updated successfully'}
+        return make_response (user.to_dict(), 202)
 
-    def delete(self, user_id):
-        user = User.query.get_or_404(user_id)
+    def delete(self, id):
+        try:
+            user = User.query.filter_by(id = id).first()
+        except:
+            return make_response({"error": "User does not exist"}, 404)
+
         db.session.delete(user)
         db.session.commit()
-        return {'message': 'User deleted successfully'}
+        session['user_id'] = None
+        return make_response({}, 204)
 
 
 class FighterResource(Resource):
@@ -115,11 +121,12 @@ class MatchResource(Resource):
     
     def post(self):
         data = request.get_json()
+        user_id = data.get('user_id')
         fighter1_id = data.get('fighter1_id')
         fighter2_id = data.get('fighter2_id')
         win_loss = data.get('win_loss')  
 
-        new_match = Match(fighter1_id=fighter1_id, fighter2_id=fighter2_id, win_loss=win_loss)
+        new_match = Match(user_id=user_id,fighter1_id=fighter1_id, fighter2_id=fighter2_id, win_loss=win_loss)
         db.session.add(new_match)
         db.session.commit()
         return {'message': 'Match created successfully'}, 201

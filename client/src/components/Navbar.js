@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../styling/navbar.css';
 import { UserContext } from '../context/user';
 
 
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [menuChecked, setMenuChecked] = useState(false);
 
   const { setUser }=useContext(UserContext);
@@ -18,7 +18,7 @@ const Navbar = () => {
       setUser(null)
       window.confirm('Logged out successfully')
     })
-    navigate('/authentication');
+    history.push('/authentication');
   };
 
   const handleLinkClick = () => {

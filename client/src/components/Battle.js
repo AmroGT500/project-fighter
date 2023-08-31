@@ -6,35 +6,48 @@ import { UserContext } from '../context/user';
 
 function Battle({ history }) {
     const location = useLocation();
-
     const { userFighter, cpuFighter } = location.state;
+    const { user } = useContext(UserContext);
 
     const [userHP, setUserHP] = useState(userFighter.hp);
     const [cpuHP, setCpuHP] = useState(cpuFighter.hp);
     const [matchId, setMatchId] = useState(null);
     const [messages, setMessages] = useState([]);
-
     const [turns, setTurns] = useState(0);
     const [specialAttackCooldown, setSpecialAttackCooldown] = useState(false);
     const [cpuSpecialAttackCooldown, setCpuSpecialAttackCooldown] = useState(true);
-
     const [matchOutcome, setMatchOutcome] = useState(null);
-
-    useEffect(() => {
-        handleMatchCreation();
-    }, []);
-
-    const { user } = useContext(UserContext);
-    if (!user) {
-        console.error('User not available');
-        return null;
-    }
+    const [currentTurn, setCurrentTurn] = useState('user');
 
     const payload = {
         user_id: user.id,
         fighter1_id: userFighter.id,
         fighter2_id: cpuFighter.id,
     };
+    // console.log(payload);
+
+    useEffect(() => {
+        console.log("match created")
+        handleMatchCreation();
+    }, []);
+
+    useEffect(() => {
+        if (currentTurn === 'user') {
+            handleDelayedCPUAttack();
+        }
+    }, [currentTurn]);
+
+    useEffect(() => {
+        const storedMatchData = JSON.parse(localStorage.getItem('currentMatchData'));
+        if (storedMatchData) {
+            setUserHP(storedMatchData.userHP);
+            setCpuHP(storedMatchData.cpuHP);
+            setMessages(storedMatchData.messages);
+            setTurns(storedMatchData.turns);
+            setMatchOutcome(storedMatchData.matchOutcome);
+            setCurrentTurn(storedMatchData.currentTurn);
+        }
+    }, []);
 
     const handleUserWin = () => {
         setMatchOutcome(true);
@@ -189,9 +202,12 @@ function Battle({ history }) {
         if (newCpuHP > 0 && newUserHP > 0) {
             handleDelayedCPUAttack();
         }
+
+        if (currentTurn !== 'user') {
+            return;
+        }
     };
     
-
     const handleMatchCreation = () => {
         fetch('/matches', {
             method: 'POST',
