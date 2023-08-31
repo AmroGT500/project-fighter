@@ -4,7 +4,7 @@ import { UserContext } from '../context/user';
 
 const MatchHistory = ({ user_id }) => {
   const {user} = useContext(UserContext)
-  const matches = user && user.matches
+ const [matches, setMatches] = useState([]);
   const [fighters, setFighters] = useState([]);
 
   useEffect(() => {
@@ -22,6 +22,31 @@ const MatchHistory = ({ user_id }) => {
         console.error('Error fetching fighters:', error);
       });
   }, []);
+
+  useEffect(() => {
+    async function fetchMatches() {
+      if (!user?.id) {
+        return;
+      }
+      try {
+        const response = await fetch(`/matches/${user.id}`);
+        if (response.ok) {
+          const matches = await response.json();
+          setMatches(matches || []);
+        } else {
+          console.error('Failed to fetch fighter data');
+        }
+      } catch (error) {
+        console.error('Error fetching fighter data:', error);
+      }
+    }
+
+    fetchMatches();
+  }, [user]);
+
+  if(!user) {
+    return null;
+  }
   
   return (
     <div className='match-history-wrapper'>
@@ -44,20 +69,20 @@ const MatchHistory = ({ user_id }) => {
                     <div className="fighter-container">
                     <div className="fighter-image">
                       <img
-                        src={fighters.find(fighter => fighter.id === match.fighter1.id)?.image}
-                        alt={match.fighter1.name}
+                        src={fighters.find(fighter => fighter.id === match.fighter1_id)?.image}
+                        // alt={match.fighter1.name}
                       />
                     </div>
-                    <div className='your-fighter'>Your Fighter: {match.fighter1.name}</div>
+                    <div className='your-fighter'>Your Fighter: {fighters.find(fighter => fighter.id === match.fighter1_id)?.name}</div>
                   </div>
                     <div className="opponent-container">
                     <div className="opponent-image">
                       <img
-                        src={fighters.find(fighter => fighter.id === match.fighter2.id)?.image}
-                        alt={match.fighter2.name}
+                        src={fighters.find(fighter => fighter.id === match.fighter2_id)?.image}
+                        // alt={match.fighter2.name}
                       />
                     </div>
-                    <div className='opponent'>Opponent: {match.fighter2.name}</div>
+                    <div className='opponent'>Opponent: {fighters.find(fighter => fighter.id === match.fighter2_id)?.name}</div>
                   </div>
                   </div>
                 </div>

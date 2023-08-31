@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import '../styling/profile.css';
 import { UserContext } from '../context/user';
 import { useNavigate } from 'react-router-dom';
@@ -12,10 +12,8 @@ function Profile() {
   const [usernameChanged, setUsernameChanged] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
   const [typedUsername, setTypedUsername] = useState('');
-  const username = user?.username;
   const [fighters, setFighters] = useState([]);
-  const [recentMatches, setRecentMatches] = useState([]);
-  const matches = user && user.matches;
+  const [matches, setMatches] = useState([]);
   const navigate = useNavigate();
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
 
@@ -37,11 +35,30 @@ function Profile() {
     fetchFighters();
   }, []);
 
-  useEffect(() => {
-    setRecentMatches(matches.slice(0, 3));
-  }, [matches]);
+
+  console.log(fighters)
 
   useEffect(() => {
+    async function fetchMatches() {
+      try {
+        const response = await fetch(`/matches/${user.id}`);
+        if (response.ok) {
+          const matches = await response.json();
+          setMatches(matches || []);
+        } else {
+          console.error('Failed to fetch fighter data');
+        }
+      } catch (error) {
+        console.error('Error fetching fighter data:', error);
+      }
+    }
+
+    fetchMatches();
+  }, [user]);
+
+  useEffect(() => {
+    console.log('typed useeffect', user)
+    let username = user?.username || ''
     let currentIndex = 0;
     setTypedUsername('');
     const typingInterval = setInterval(() => {
@@ -56,7 +73,19 @@ function Profile() {
     }, 300);
 
     return () => clearInterval(typingInterval);
-  }, [username]);
+  }, [user]);
+
+  const recentMatches = useMemo(() => {
+    return matches?.slice(0,3) || []
+  }, [matches])
+
+  console.log('user', user)
+
+  console.log('recentMatches', recentMatches)
+
+  if(!user) {
+    return null;
+  }
 
   const handleUsernameChange = event => {
     setNewUsername(event.target.value);
@@ -143,22 +172,22 @@ function Profile() {
   };
   
   function wins() {
-    if (user && user.matches) {
-      return user.matches.filter(match => match.win_loss).length;
+    if (matches) {
+      return matches.filter(match => match.win_loss).length;
     }
     return 0; 
   }
   
   function losses() {
-    if (user && user.matches) {
-      return user.matches.filter(match => !match.win_loss).length;
+    if (matches) {
+      return matches.filter(match => !match.win_loss).length;
     }
     return 0; 
   }
   
   function winrate() {
-    if (user && user.matches) {
-      const totalMatches = user.matches.length;
+    if (matches) {
+      const totalMatches = matches.length;
   
       if (totalMatches === 0) {
         return 'No matches recorded';
@@ -185,19 +214,20 @@ function Profile() {
         </div>
         <div className='top-fighters'>
           <div className="top-fighters-header" colSpan="3">
-            <h3>Recent Wins by Fighter</h3>
+            <h3>Recently Played Fighters</h3>
           </div>
-          {recentMatches.slice(-3).reverse().map(match => {
-            const fighterInfo1 = fighters.find(fighter => fighter.id === match.fighter1.id);
-            const fighterInfo2 = fighters.find(fighter => fighter.id === match.fighter2.id);
+          {recentMatches.reverse().map(match => {
+            console.log('match', match);
+            const fighterInfo1 = fighters.find(fighter => fighter.id === match.fighter1_id);
+            // const fighterInfo2 = fighters.find(fighter => fighter.id === match.fighter2_id);
             return (
               <div key={match.id} className='recent-fighter-list'>
                 <div className='recent-fighter-image'>
                   <img src={fighterInfo1?.image} alt={fighterInfo1?.name} />
                 </div>
-                <div className='recent-fighter-image'>
+                {/* <div className='recent-fighter-image'>
                   <img src={fighterInfo2?.image} alt={fighterInfo2?.name} />
-                </div>
+                </div> */}
               </div>
             );
           })}

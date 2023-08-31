@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styling/fight-setup.css'; 
 
 function FightSetup() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [fighters, setFighters] = useState([]);
   const [selectedUserFighter, setSelectedUserFighter] = useState(null);
   const [selectedCpuFighter, setSelectedCpuFighter] = useState(null);
@@ -50,6 +50,10 @@ function FightSetup() {
         console.error('Error fetching fighters:', error);
       });
   }, []);
+
+  if (!user) {
+    return null
+  }
 
   return (
     <div className={`fight-setup-container${startBattle ? ' start-battle' : ''}`}>

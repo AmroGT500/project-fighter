@@ -43,6 +43,27 @@ class Logout(Resource):
         return make_response({'message':'You have been successfully logged out!'}, 204)
 
 
+class CheckSession(Resource):
+    def get(self):
+        print('Checking session', session.get('user_id'))
+        user = User.query.filter_by(id = session.get('user_id')).first() 
+        if user is not None:
+            user_data = {
+                'id': user.id,
+                'username' : user.username
+            }
+            return {'message': 'Session is active', 'user': user_data}, 200
+        else:
+            return {'message': 'No active session', 'user_id': None}, 401
+
+api.add_resource(CheckSession, '/check-session')
+
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return make_response({'message':'You have been successfully logged out!'}, 204)
+
+
 class UserResource(Resource):
     def get(self, user_id=None):
         if user_id is None:
@@ -75,6 +96,7 @@ class UserResource(Resource):
 
 class FighterResource(Resource):
     def get(self, fighter_id=None):
+        print('Getting Fighter')
         if fighter_id is None:
             fighters = Fighter.query.all()
             fighters_data = [
@@ -115,11 +137,12 @@ class MatchResource(Resource):
     
     def post(self):
         data = request.get_json()
+        user_id = data.get('user_id')
         fighter1_id = data.get('fighter1_id')
         fighter2_id = data.get('fighter2_id')
         win_loss = data.get('win_loss')  
 
-        new_match = Match(fighter1_id=fighter1_id, fighter2_id=fighter2_id, win_loss=win_loss)
+        new_match = Match(user_id=user_id, fighter1_id=fighter1_id, fighter2_id=fighter2_id, win_loss=win_loss)
         db.session.add(new_match)
         db.session.commit()
         return {'message': 'Match created successfully'}, 201
