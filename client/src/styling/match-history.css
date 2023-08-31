@@ -4,11 +4,11 @@
 }
 
 .match-history-container {
-  display: flex;
-  flex-direction: column reverse;
-  width: 1200px;
+  display: grid;
+  width: 1000px;
   gap: 40px ;
   font-family: 'Darbots', sans-serif;
+  grid-template-rows: auto;
 }
 
 .match-history-title {

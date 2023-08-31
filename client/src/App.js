@@ -25,7 +25,6 @@ function App() {
 
 function AuthenticatedRoutes() {
 
-  // TODO: Check User Exists else send to authentication
 
   return (
     <>

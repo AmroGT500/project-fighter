@@ -8,7 +8,6 @@ function UserProvider({ children }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('HI')
         fetch('/check-session')
             .then(r => {
                 if (r.ok) {
