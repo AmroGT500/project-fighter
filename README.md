@@ -1,6 +1,6 @@
 # Project Fighter
 
-![PF](https://media1.giphy.com/media/lPwZcFRMGOFPO/200.webp?cid=ecf05e47b092blk66mf4m3hquexsdnllkdeto9cyiul38f5h&ep=v1_gifs_search&rid=200.webp&ct=g)
+![PF](https://media1.giphy.com/media/lPwZcFRMGOFPO/200.webp?cid=ecf05e47b092blk66mf4m3hquexsdnllkdeto9cyiul38f5h&ep=v1_gifs_search&rid=200.webp&ct=g) (https://media2.giphy.com/media/bLy8cwoobMGx1uDHkO/200w.webp?cid=ecf05e478ifvnl69z5kvttdgut9limw3x03pj7gski49en9h&ep=v1_gifs_search&rid=200w.webp&ct=g)
 
 
 An exciting web application that allows users to engage in virtual battles between various fighters. Choose your champion, strategize your moves, and battle it out in an epic showdown! Orrrr... it will be... soon!
