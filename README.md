@@ -35,10 +35,10 @@ Project Fighter is an interactive web application designed to provide users with
 
 
 ## Installation
-# Clone the repository:
+### Clone the repository:
    git clone https://github.com/AmroGT500/project-fighter
 
-# CLIENT SIDE:
+### CLIENT SIDE:
 1. Navigate to the client directory:
     ``cd client``
 
@@ -48,7 +48,7 @@ Project Fighter is an interactive web application designed to provide users with
 3. Start the development server:
     ``npm start``
 
-# SERVER SIDE:
+### SERVER SIDE:
 1. Navigate to the server directory:
     ``cd server``
 
