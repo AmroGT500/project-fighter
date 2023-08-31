@@ -36,14 +36,13 @@ function Profile() {
   }, []);
 
 
-  console.log(fighters)
-
   useEffect(() => {
     async function fetchMatches() {
       try {
         const response = await fetch(`/matches/${user.id}`);
         if (response.ok) {
           const matches = await response.json();
+          console.log('matches', matches)
           setMatches(matches || []);
         } else {
           console.error('Failed to fetch fighter data');
@@ -57,7 +56,6 @@ function Profile() {
   }, [user]);
 
   useEffect(() => {
-    console.log('typed useeffect', user)
     let username = user?.username || ''
     let currentIndex = 0;
     setTypedUsername('');
@@ -76,12 +74,9 @@ function Profile() {
   }, [user]);
 
   const recentMatches = useMemo(() => {
-    return matches?.slice(0,3) || []
+    return matches?.slice(Math.max(matches.length - 3, 1)) || []
   }, [matches])
 
-  console.log('user', user)
-
-  console.log('recentMatches', recentMatches)
 
   if(!user) {
     return null;
@@ -107,7 +102,6 @@ function Profile() {
         setUser(prevUser => ({ ...prevUser, username: newUsername }));
         setNewUsername('');
         setUsernameChanged(true);
-        console.log('Username changed ');
 
         setTimeout(() => {
           setUsernameChanged(false);
@@ -139,7 +133,6 @@ function Profile() {
       if (response.ok) {
         setNewPassword('');
         setPasswordChanged(true);
-        console.log('Password changed ');
 
         setTimeout(() => {
           setPasswordChanged(false);
@@ -217,7 +210,6 @@ function Profile() {
             <h3>Recently Played Fighters</h3>
           </div>
           {recentMatches.reverse().map(match => {
-            console.log('match', match);
             const fighterInfo1 = fighters.find(fighter => fighter.id === match.fighter1_id);
             // const fighterInfo2 = fighters.find(fighter => fighter.id === match.fighter2_id);
             return (

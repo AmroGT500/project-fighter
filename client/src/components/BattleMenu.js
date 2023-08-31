@@ -1,4 +1,6 @@
 import React from 'react';
+import '../styling/battle.css';
+
 
 function BattleMenu({ onAbility }) {
     const handleUserAbilities = (abilityType) => {
@@ -6,7 +8,7 @@ function BattleMenu({ onAbility }) {
     };
 
     return (
-        <div>
+        <div className='ability-buttons'>
             <button onClick={() => handleUserAbilities("punch")}>Punch</button>
             <button onClick={() => handleUserAbilities("kick")}>Kick</button>
             <button onClick={() => handleUserAbilities("block")}>Block</button>

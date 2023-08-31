@@ -1,28 +1,60 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BattleMenu from './BattleMenu';
 import '../styling/battle.css';
 import { UserContext } from '../context/user';
 
-function Battle({ history }) {
+const blockModifiers = {
+    kick: 0.25,
+    punch: 0
+}
+
+const getRandom = (arr) => {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    return arr[randomIndex];
+};
+
+// attacker: { name, ap, hp, cd, ability }
+const handleAttack = (attacker, defender) => {
+    console.log('handle', attacker, defender)
+
+    console.log(attacker.ability)
+
+    if (attacker.ability === 'block') {
+        return [defender.hp, `${attacker.name} blocked`];
+    }
+    if (defender.ability === 'block') {
+
+        if (attacker.ability === 'special') {
+            return [defender.hp - attacker.ap * 1.65, `${attacker.name} used special attack and ignored ${defender.name}'s block`]
+        }
+        return [defender.hp - attacker.ap * blockModifiers[attacker.ability], `${attacker.name} ${attacker.ability}ed, but ${defender.name} blocked and took less damage`];
+    }
+
+    if (attacker.ability === 'special') {
+        return [defender.hp - attacker.ap * 1.65, `${attacker.name} used special attack`]
+    }
+
+    return [defender.hp - attacker.ap, `${attacker.name} ${attacker.ability}ed`]
+}
+
+// FIXED IT, BRB GETTING WATER!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+function Battle() {
     const location = useLocation();
+    const navigate = useNavigate();
 
-    const { userFighter, cpuFighter } = location.state;
+    const { userFighter, cpuFighter } = location?.state || {};
 
-    const [userHP, setUserHP] = useState(userFighter.hp);
-    const [cpuHP, setCpuHP] = useState(cpuFighter.hp);
-    const [matchId, setMatchId] = useState(null);
+    const [userHP, setUserHP] = useState(userFighter?.hp);
+    const [cpuHP, setCpuHP] = useState(cpuFighter?.hp);
     const [messages, setMessages] = useState([]);
 
-    const [turns, setTurns] = useState(0);
-    const [specialAttackCooldown, setSpecialAttackCooldown] = useState(false);
-    const [cpuSpecialAttackCooldown, setCpuSpecialAttackCooldown] = useState(true);
+    const [turn, setTurn] = useState(0);
+    const [specialAttackCooldown, setSpecialAttackCooldown] = useState(3);
+    const [cpuSpecialAttackCooldown, setCpuSpecialAttackCooldown] = useState(0);
 
     const [matchOutcome, setMatchOutcome] = useState(null);
-
-    useEffect(() => {
-        handleMatchCreation();
-    }, []);
 
     const { user } = useContext(UserContext);
     if (!user) {
@@ -30,202 +62,108 @@ function Battle({ history }) {
         return null;
     }
 
-    const payload = {
-        user_id: user.id,
-        fighter1_id: userFighter.id,
-        fighter2_id: cpuFighter.id,
-    };
+    if (!location?.state) {
+        navigate('/fight-setup')
+        return;
+    }
 
-    const handleUserWin = () => {
-        setMatchOutcome(true);
-        handleUpdateMatchOutcome(true);
-    };
+    const handleAttacks = (ability) => {
+        let userCd = specialAttackCooldown
+        let cpuCd = cpuSpecialAttackCooldown
+        let cpuAbility = getRandom(['kick', 'punch', 'block', 'special'])
+        let newMessages = [...messages, `======= TURN ${turn + 1} =======`]
 
-    const handleUserLoss = () => {
-        setMatchOutcome(false);
-        handleUpdateMatchOutcome(false);
-    };
-
-    const getRandomMessage = (messages) => {
-        const randomIndex = Math.floor(Math.random() * messages.length);
-        return messages[randomIndex];
-    };
-
-    const handleCPUAttack = () => {
-        const userAttackPower = userFighter.ap;
-        const cpuAttackPower = cpuFighter.ap;
-
-        const cpuAction = getRandomAction();
-
-        let message;
-        let newUserHP = userHP;
-
-        if (cpuAction === 'punch') {
-            newUserHP -= cpuAttackPower;
-            message = `CPU threw a punch at you!`;
-        } else if (cpuAction === 'kick') {
-            const reducedDamage = userAttackPower * 0.25;
-            newUserHP = Math.max(0, userHP - reducedDamage);
-            message = `CPU kicked you, but you blocked some damage.`;
-        } else if (cpuAction === 'block') {
-            message = `CPU is on the defensive and blocked your attack.`;
-        } else if (cpuAction === 'special' && !cpuSpecialAttackCooldown) {
-            const damage = cpuAttackPower * 1.65;
-            newUserHP = Math.max(0, userHP - damage);
-            message = `CPU used a special attack on you!`;
+        while (cpuAbility === 'special' && cpuCd > 0) {
+            cpuAbility = getRandom(['kick', 'punch', 'block', 'special'])
         }
 
-        setMessages([...messages, message]);
-        setUserHP(newUserHP);
+        console.log('you have')
 
-        if (newUserHP <= 0) {
-            handleUserLoss();
-        }
-        setCpuSpecialAttackCooldown(true);
-
-        if (turns >= 3) {
-            setCpuSpecialAttackCooldown(false);
-        }
-
-        handleDelayedCPUAttack();
-    };
-
-    const handleDelayedCPUAttack = () => {
-        setTimeout(() => {
-            handleCPUAttack();
-        }, 2000);
-    };
-
-    const getRandomAction = () => {
-        const actions = ['punch', 'kick', 'block', 'special'];
-        const randomIndex = Math.floor(Math.random() * actions.length);
-        return actions[randomIndex];
-    };
-
-    const handleUserAbilities = (abilityType) => {
-        if (specialAttackCooldown && abilityType === 'special') {
-            setMessages([...messages, 'Special attack is on cooldown. Choose another ability.']);
+        if (userCd > 0 && ability === 'special') {
+            setMessages([...newMessages, 'special attack is on cooldown use a different attack'])
             return;
         }
-    
-        const userAttackPower = userFighter.ap;
-        const cpuAttackPower = cpuFighter.ap;
-    
-        let newUserHP = userHP;
-        let newCpuHP = cpuHP;
-        let message = '';
-    
-        const cpuAction = getRandomAction();
-    
-        if (abilityType === 'punch') {
-            message = getRandomMessage([
-                "You threw a punch and got 'em good!",
-                "You hit 'em so hard they don't know what hit 'em!",
-                "Blistering right hook!",
-            ]);
-    
-            if (cpuAction === 'block') {
-                message = "You threw a punch but they blocked it.";
-            } else if (cpuAction === 'kick') {
-                newCpuHP -= userAttackPower * 0.25;
-                message = "They blocked your punch, but still took some damage.";
-            } else if (cpuAction === 'special' && !cpuSpecialAttackCooldown) {
-                newCpuHP -= userAttackPower * 1.65;
-                message = "They couldn't defend against your special punch!";
-            } else {
-                newCpuHP -= userAttackPower;
-            }
-        } else if (abilityType === 'kick') {
-            message = getRandomMessage([
-                "You hit 'em so hard they don't know what hit 'em!",
-                "Clean hit!",
-                "I think that wobbled 'em!",
-            ]);
-    
-            if (cpuAction === 'block') {
-                newCpuHP -= userAttackPower * 0.25;
-                message = "They blocked your kick, but still took some damage.";
-            } else if (cpuAction === 'punch') {
-                message = "You kicked and they punched at the same time.";
-            } else if (cpuAction === 'special' && !cpuSpecialAttackCooldown) {
-                newCpuHP -= userAttackPower * 1.65;
-                message = "They couldn't defend against your special kick!";
-            } else {
-                newCpuHP -= userAttackPower;
-            }
-        } else if (abilityType === 'block') {
-            message = 'Nice defense!';
-    
-            if (cpuAction === 'punch') {
-                newUserHP -= cpuAttackPower * 0.25;
-                message = "They punched, but you blocked and took less damage.";
-            } else if (cpuAction === 'kick') {
-                newUserHP -= cpuAttackPower;
-                message = "They tried to kick, but you blocked it.";
-            }
-        } else if (abilityType === 'special') {
-            newUserHP -= 1.65 * cpuAttackPower;
-            newCpuHP -= 1.65 * userAttackPower;
-            message = "They're not getting up after that!";
-    
-            setSpecialAttackCooldown(true);
-            setTurns(turns + 1);
-    
-            setTimeout(() => {
-                setSpecialAttackCooldown(false);
-            }, 3 * 3000);
-        }
-    
-        setMessages([...messages, message]);
-        setUserHP(newUserHP);
-        setCpuHP(newCpuHP);
-    
-        if (newCpuHP <= 0) {
-            handleUserWin();
-        } else if (newUserHP <= 0) {
-            handleUserLoss();
-        }
-    
-        if (newCpuHP > 0 && newUserHP > 0) {
-            handleDelayedCPUAttack();
-        }
-    };
-    
 
-    const handleMatchCreation = () => {
-        fetch('/matches', {
+        const [cpuHealth, cpuMessage] = handleAttack({
+            name: userFighter.name,
+            ap: userFighter.ap,
+            hp: userHP,
+            cd: userCd,
+            ability
+        }, {
+            name: cpuFighter.name,
+            ap: cpuFighter.ap,
+            hp: cpuHP,
+            cd: cpuCd,
+            ability: cpuAbility
+        })
+
+        const [playerHealth, playerMessage] = handleAttack({
+            name: cpuFighter.name,
+            ap: cpuFighter.ap,
+            hp: cpuHP,
+            cd: cpuCd,
+            ability: cpuAbility
+        }, {
+            name: userFighter.name,
+            ap: userFighter.ap,
+            hp: userHP,
+            cd: userCd,
+            ability
+        })
+
+        if (cpuAbility === 'special') {
+            cpuCd = 4
+        }
+
+        if (ability === 'special') {
+            userCd = 4
+        }
+
+        cpuCd = cpuCd > 0 ? cpuCd - 1: 0
+        userCd = userCd > 0 ? userCd - 1: 0
+
+        
+        setCpuSpecialAttackCooldown(cpuCd)
+        setSpecialAttackCooldown(userCd)
+
+        setCpuHP(cpuHealth)
+        setUserHP(playerHealth)
+        newMessages = [...newMessages, cpuMessage, playerMessage]
+        setTurn(turn + 1)
+
+        if (playerHealth <= 0 || cpuHealth <= 0) {
+            if (playerHealth <= 0) {
+                newMessages = [...newMessages, 'You Lose!']
+                setMatchOutcome(false)
+            } else {
+                newMessages = [...newMessages, 'You Win!']
+                setMatchOutcome(true)
+            }
+        }
+        setMessages(newMessages)
+    }
+
+    const handleUpdateMatchOutcome = () => {
+        fetch(`/matches`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(payload),
-        })
-        .then(response => response.json())
-        .then(data => {
-            setMatchId(data.match_id);
-        })
-        .catch(error => {
-            console.error('Error creating match:', error);
-        });
-    };
-
-    const handleUpdateMatchOutcome = (isUserWinner) => {
-        fetch(`/matches/${matchId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify({
-                win_loss: isUserWinner,
+                user_id: user.id,
+                fighter1_id: userFighter.id,
+                fighter2_id: cpuFighter.id,
+                win_loss: matchOutcome,
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            history.push('/match-history');
-        })
-        .catch(error => {
-            console.error('Error updating match outcome:', error);
-        });
+            .then(response => response.json())
+            .then(() => {
+                navigate('/match-history');
+            })
+            .catch(error => {
+                console.error('Error updating match outcome:', error);
+            });
     };
 
     return (
@@ -242,6 +180,7 @@ function Battle({ history }) {
                         />
                     </div>
                     <p>HP: {userHP}</p>
+                    <p>Special Cooldown: {specialAttackCooldown > 0 ? `${specialAttackCooldown} Turns` : 'Available!'}</p>
                 </div>
                 <div className="fighter">
                     <h2>{cpuFighter.name}</h2>
@@ -253,9 +192,10 @@ function Battle({ history }) {
                         />
                     </div>
                     <p>HP: {cpuHP}</p>
+                    <p>Special Cooldown: {cpuSpecialAttackCooldown > 0 ? `${cpuSpecialAttackCooldown} Turns` : 'Available!'}</p>
                 </div>
             </div>
-            <BattleMenu onAbility={handleUserAbilities} />
+            {matchOutcome === null && <BattleMenu onAbility={handleAttacks} />}
             {matchOutcome !== null && (
                 <div>
                     {matchOutcome ? <p>You won the match!</p> : <p>You lost the match.</p>}
