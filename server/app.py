@@ -8,6 +8,7 @@ import random
 def home():
     return "Welcome to the Fighter App!"
 
+
 class AuthLoginResource(Resource):
     def post(self):
         data = request.get_json()
@@ -56,7 +57,6 @@ class CheckSession(Resource):
         else:
             return {'message': 'No active session', 'user_id': None}, 401
 
-api.add_resource(CheckSession, '/check-session')
 
 class Logout(Resource):
     def delete(self):
@@ -150,10 +150,14 @@ class MatchResource(Resource):
 
 api.add_resource(AuthLoginResource, '/auth/login')
 api.add_resource(AuthSignupResource, '/auth/signup')
+api.add_resource(CheckSession, '/check-session')
+
 api.add_resource(UserResource, '/users', '/users/<int:user_id>')
 api.add_resource(FighterResource, '/fighters', '/fighters/<int:fighter_id>')
 api.add_resource(MatchResource, '/matches', '/matches/<int:user_id>')
+
 api.add_resource(Logout, '/logout')
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

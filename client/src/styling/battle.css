@@ -249,3 +249,13 @@ initial-value: 0turn;
 .battle-messages-container::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+.user-hp-fill,
+.cpu-hp-fill {
+    transition: width 0.7s ease, background-color 0.7s ease;  
+}
+
+.user-hp-fill.dimmed,
+.cpu-hp-fill.dimmed {
+    background-color: rgba(255, 0, 0, 0.55);
+}

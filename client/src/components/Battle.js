@@ -125,8 +125,22 @@ function Battle() {
         setCpuSpecialAttackCooldown(cpuCd)
         setSpecialAttackCooldown(userCd)
 
-        setCpuHP(cpuHealth)
-        setUserHP(playerHealth)
+        const cpuHPBar = document.querySelector('.cpu-hp-fill');
+        const userHPBar = document.querySelector('.user-hp-fill');
+        cpuHPBar.classList.remove('dimmed');
+        userHPBar.classList.remove('dimmed');
+
+    // Update cpu HP bar
+    setCpuHP(Math.max(cpuHealth, 0).toFixed(2));
+    cpuHPBar.classList.toggle('dimmed', cpuHealth < cpuHP);
+
+    // Toggle the 'dimmed' class for the CPU HP bar
+    cpuHPBar.classList.toggle('dimmed', cpuHealth < cpuHP);
+
+    // Update user HP bar
+    setUserHP(Math.max(playerHealth, 0).toFixed(2));
+    userHPBar.classList.toggle('dimmed', playerHealth < userHP);
+
         newMessages = [...newMessages, cpuMessage, playerMessage]
         setTurn(turn + 1)
 
@@ -178,7 +192,7 @@ function Battle() {
                             style={{ width: `${(userHP / userFighter.hp) * 100}%` }}
                         />
                     </div>
-                    <p>HP: {userHP}</p>
+                    <p>HP: {Math.max(userHP, 0).toFixed(2)}</p>
                     <p>Special Cooldown: {specialAttackCooldown > 0 ? `${specialAttackCooldown} Turns` : 'Available!'}</p>
                 </div>
                 <div className="cpu-fighter">
@@ -190,7 +204,7 @@ function Battle() {
                             style={{ width: `${(cpuHP / cpuFighter.hp) * 100}%` }}
                         />
                     </div>
-                    <p>HP: {cpuHP}</p>
+                    <p>HP: {Math.max(cpuHP, 0).toFixed(2)}</p>
                     <p>Special Cooldown: {cpuSpecialAttackCooldown > 0 ? `${cpuSpecialAttackCooldown} Turns` : 'Available!'}</p>
                 </div>
             </div>
