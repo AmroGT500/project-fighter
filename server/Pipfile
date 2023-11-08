@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 sqlalchemy-serializer = "*"
-flask = "*"
+flask = "2.2.5"
 flask-migrate = "*"
 flask-sqlalchemy = "*"
 ipdb = "*"
@@ -16,4 +16,4 @@ flask-cors = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+python_version = "3.8"
