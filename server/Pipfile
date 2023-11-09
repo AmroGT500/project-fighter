@@ -12,6 +12,7 @@ ipdb = "*"
 flask-restful = "*"
 flask-bcrypt = "*"
 flask-cors = "*"
+ipython = "7.34.0"
 
 [dev-packages]
 
