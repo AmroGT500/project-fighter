@@ -32,7 +32,7 @@ six==1.16.0
 SQLAlchemy==2.0.22
 SQLAlchemy-serializer==1.4.1
 stack-data==0.6.3
-traitlets==5.13.0
+traitlets==5.9.0
 typing_extensions==4.8.0
 wcwidth==0.2.9
 Werkzeug==3.0.1
