@@ -4,6 +4,7 @@ import UserFighterCard from './UserFighterCard';
 import CpuFighterCard from './CpuFighterCard'; 
 import { useNavigate } from 'react-router-dom';
 import '../styling/fight-setup.css'; 
+import { fetchApi } from '../utils';
 
 function FightSetup() {
   const { user } = useContext(UserContext);
@@ -36,7 +37,7 @@ function FightSetup() {
   })
 
   useEffect(() => {
-    fetch('/fighters')
+    fetchApi('/fighters')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

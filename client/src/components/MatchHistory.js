@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import '../styling/match-history.css';
 import { UserContext } from '../context/user';
+import { fetchApi } from '../utils';
 
 const MatchHistory = () => {
   const { user } = useContext(UserContext);
@@ -8,7 +9,7 @@ const MatchHistory = () => {
   const [fighters, setFighters] = useState([]);
 
   useEffect(() => {
-    fetch('/fighters')
+    fetchApi('/fighters')
       .then(response => response.json())
       .then(data => {
         setFighters(data);
@@ -24,7 +25,7 @@ const MatchHistory = () => {
         return;
       }
       try {
-        const response = await fetch(`/matches/${user.id}`);
+        const response = await fetchApi(`/matches/${user.id}`);
         if (response.ok) {
           const matches = await response.json();
           setMatches(matches || []);

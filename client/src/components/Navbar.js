@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styling/navbar.css';
 import { UserContext } from '../context/user';
+import { fetchApi } from '../utils';
 
 
 
@@ -12,7 +13,7 @@ const Navbar = () => {
   const { setUser }=useContext(UserContext);
 
   const handleSignOut = () => {
-    fetch('/logout', {
+    fetchApi('/logout', {
       method: 'DELETE',
     }).then(() => {
       setUser(null)

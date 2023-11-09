@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BattleMenu from './BattleMenu';
 import '../styling/battle.css';
 import { UserContext } from '../context/user';
+import { fetchApi } from '../utils';
 
 const blockModifiers = {
     kick: 0.25,
@@ -157,7 +158,7 @@ function Battle() {
     }
 
     const handleUpdateMatchOutcome = () => {
-        fetch(`/matches`, {
+        fetchApi(`/matches`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

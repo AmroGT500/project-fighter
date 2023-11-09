@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { fetchApi } from "../utils";
 
 const UserContext = createContext(null);
 
@@ -8,7 +9,7 @@ function UserProvider({ children }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('/check-session')
+        fetchApi('/check-session')
             .then(r => {
                 if (r.ok) {
                     r.json().then(userObj => { 

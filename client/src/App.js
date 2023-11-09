@@ -10,6 +10,7 @@ import { UserProvider } from './context/user';
 import './App.css';
 
 function App() {
+  console.log(process.env)
   return (
     <Router>
       <UserProvider>

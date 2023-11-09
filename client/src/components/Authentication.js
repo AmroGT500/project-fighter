@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import '../styling/authentication.css';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/user';
+import { fetchApi } from '../utils';
 
 
 const Authentication = () => {
@@ -24,7 +25,7 @@ const Authentication = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('/auth/login', {
+      const response = await fetchApi('/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +53,7 @@ const Authentication = () => {
     }
   
     try {
-      const response = await fetch('/auth/signup', {
+      const response = await fetchApi('/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

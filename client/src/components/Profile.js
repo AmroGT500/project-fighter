@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useMemo } from 'react';
 import '../styling/profile.css';
 import { UserContext } from '../context/user';
 import { useNavigate } from 'react-router-dom';
+import { fetchApi } from '../utils';
 
 function Profile() {
   const { user, setUser } = useContext(UserContext);
@@ -20,7 +21,7 @@ function Profile() {
   useEffect(() => {
     async function fetchFighters() {
       try {
-        const response = await fetch('/fighters');
+        const response = await fetchApi('/fighters');
         if (response.ok) {
           const fighters = await response.json();
           setFighters(fighters);
@@ -39,7 +40,7 @@ function Profile() {
   useEffect(() => {
     async function fetchMatches() {
       try {
-        const response = await fetch(`/matches/${user.id}`);
+        const response = await fetchApi(`/matches/${user.id}`);
         if (response.ok) {
           const matches = await response.json();
           console.log('matches', matches)
@@ -90,7 +91,7 @@ function Profile() {
     if (newUsername.trim() === '') return;
 
     try {
-      const response = await fetch(`/users/${user.id}`, {
+      const response = await fetchApi(`/users/${user.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ function Profile() {
     if (newPassword.trim() === '') return;
 
     try {
-      const response = await fetch(`/users/${user.id}`, {
+      const response = await fetchApi(`/users/${user.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ function Profile() {
     setShowDeletePrompt(false);
 
     try {
-      const response = await fetch(`/users/${user.id}`, {
+      const response = await fetchApi(`/users/${user.id}`, {
         method: 'DELETE',
       });
 

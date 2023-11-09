@@ -1,6 +1,6 @@
 
-// const fetchApi = async (url, data = {} ) => {
-//     return await fetch(`http://localhost:5555/${url}`, data);
-// }
+const fetchApi = async (url, data = {} ) => {
+    return await fetch(`${process.env.REACT_APP_SERVER_URL}${url}`, data);
+}
 
-// export { fetchApi } 
+export { fetchApi } 
